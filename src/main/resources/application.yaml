@@ -12,7 +12,7 @@ spring:
     type-aliases-package: com.max.fallinlove.entity
 
 server:
-  port: 80
+  port: 8080
   error:
     include-stacktrace: always
 
