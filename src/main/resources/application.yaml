@@ -1,0 +1,29 @@
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.98.142.214:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
+    username: root
+    password: root1234
+
+#mybatis-plus
+  mybatis-plus:
+    mapper-locations: classpath:com/max/fallinlove/mapper/xml/*.xml
+    type-aliases-package: com.max.fallinlove.entity
+
+server:
+  port: 80
+  error:
+    include-stacktrace: always
+
+logging:
+  level:
+    org:
+      springframwork:
+        web: trace
+
+# swagger 可使用
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
