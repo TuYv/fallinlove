@@ -1,45 +1,64 @@
 package com.max.fallinlove.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Tolerate;
 
 /**
  * @author max
  */
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder(toBuilder = true)
+@ApiModel(value = "API统一返回数据封装类")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Result<T> {
 
-    private Integer code;
+    @ApiModelProperty(value = "返回状态:SUCCEED和FAILED")
+    private String returnStatus;
 
-    private String msg;
+    @ApiModelProperty(value = "时间戳")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String serverTime;
 
+    @ApiModelProperty(value = "请求ID")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String requestId;
+
+    @ApiModelProperty(value = "错误码")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String errorCode;
+
+    @ApiModelProperty(value = "错误信息")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String errorMessage;
+
+    @ApiModelProperty(value = "错误扩展信息")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Object extMessage;
+
+    @ApiModelProperty(value = "总共条数")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer totalCount;
+
+    @ApiModelProperty(value = "页数")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer pageNo;
+
+    @ApiModelProperty(value = "本页条数")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer pageSize;
+
+    @ApiModelProperty(value = "封装数据")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
-    public Result<T> success(Integer code, String msg, T data) {
-        return new Result<T>(code, msg, data);
-    }
-
-    public Result<T> success(Integer code, String msg) {
-        return new Result<T>(code, msg, null);
-    }
-
-    public Result<T> success() {
-        return success(200, "请求成功");
-    }
-
-    public Result<T> success(T data) {
-        return success(200, "请求成功", data);
-    }
-
-    public Result<T> failed(Integer code, String msg) {
-        return new Result<T>(code, msg, null);
-    }
-
-    public Result<T> failed() {
-        return new Result<T>(500, "请求出现未知错误", null);
-    }
-
+    @Tolerate
+    public Result(){}
 }

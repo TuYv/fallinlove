@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.date.DatePattern;
 import com.max.fallinlove.common.Result;
+import com.max.fallinlove.common.ResultUtils;
 import com.max.fallinlove.dto.UserDTO;
 import com.max.fallinlove.entity.User;
 import com.max.fallinlove.mapper.UserMapper;
@@ -34,6 +35,7 @@ public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements
     private static final Pattern NAME_PATTERN = Pattern.compile("^[\\u4e00-\\u9fa5_a-zA-Z0-9]+$");
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9$@!.%*#_~?&]{8,16}$");
 
+    //todo 注释了登录注册的数据验证功能 后期放开
     /**
      * 登录
      */
@@ -44,9 +46,9 @@ public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements
         }*/
         User user = userMapper.selectByNameAndPwd(userName, password);
         if (Objects.nonNull(user)) {
-            return new Result().success(user);
+            return ResultUtils.success(user);
         }else {
-            return new Result().failed(200, "数据不存在");
+            return ResultUtils.fail("200", "数据不存在");
         }
     }
 
@@ -55,16 +57,19 @@ public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements
      */
     @Override
     public Result register(UserDTO userDTO) {
+        /*if (!verifyMessage(userDTO.userName,userDTO.password)) {
+           return new Result().failed(200, "账号密码不符合要求");
+        }*/
         User user = userMapper.selectByNickName(userDTO.getNickName());
         if(Objects.nonNull(user)) {
-            return new Result().failed(200, "该昵称已存在");
+            return ResultUtils.fail("200", "该昵称已存在");
         } else {
             user = new User();
             BeanUtil.copyProperties(userDTO, user, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
             userMapper.insert(user);
         }
 
-        return new Result().success();
+        return ResultUtils.success();
     }
 
     private boolean verifyMessage(String userName, String password) {

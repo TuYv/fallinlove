@@ -2,6 +2,7 @@ package com.max.fallinlove.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.max.fallinlove.common.Result;
+import com.max.fallinlove.common.ResultUtils;
 import com.max.fallinlove.dto.TodoDTO;
 import com.max.fallinlove.entity.Todo;
 import com.max.fallinlove.mapper.TodoMapper;
@@ -33,7 +34,7 @@ public class TodoServiceImpl extends ServiceImpl<TodoMapper, Todo> implements IT
         BeanUtil.copyProperties(todoDTO, todo);
         todoMapper.insert(todo);
 
-        return new Result().success();
+        return ResultUtils.success();
     }
 
     /**
@@ -43,7 +44,7 @@ public class TodoServiceImpl extends ServiceImpl<TodoMapper, Todo> implements IT
     public Result deleteTode(Integer todoId) {
         todoMapper.deleteById(todoId);
 
-        return new Result().success();
+        return ResultUtils.success();
     }
 
     /**
@@ -55,7 +56,7 @@ public class TodoServiceImpl extends ServiceImpl<TodoMapper, Todo> implements IT
         BeanUtil.copyProperties(todoDTO, todo);
         todoMapper.updateById(todo);
 
-        return new Result().success();
+        return ResultUtils.success();
     }
 
     /**
@@ -65,6 +66,6 @@ public class TodoServiceImpl extends ServiceImpl<TodoMapper, Todo> implements IT
     public Result selectTode(Integer userId) {
         List<Todo> todoList = todoMapper.selectByUserId(userId);
 
-        return new Result().success(todoList);
+        return ResultUtils.success(todoList);
     }
 }

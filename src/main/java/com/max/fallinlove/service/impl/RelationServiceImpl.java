@@ -2,6 +2,7 @@ package com.max.fallinlove.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.max.fallinlove.common.Result;
+import com.max.fallinlove.common.ResultUtils;
 import com.max.fallinlove.entity.Relation;
 import com.max.fallinlove.mapper.RelationMapper;
 import com.max.fallinlove.mapper.UserMapper;
@@ -50,6 +51,6 @@ public class RelationServiceImpl extends ServiceImpl<RelationMapper, Relation> i
 //
 //        relationMapper.insert(relation);
 
-        return new Result().success();
+        return ResultUtils.success();
     }
 }
