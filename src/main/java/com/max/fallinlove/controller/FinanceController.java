@@ -13,11 +13,13 @@ import com.max.fallinlove.service.IMonthAmountDetailService;
 import com.max.fallinlove.service.IMonthAmountService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,6 +79,7 @@ public class FinanceController {
         return ResultUtils.success(financeIndexModel);
     }
 
+    @Transactional
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @Operation(summary = "添加账单 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
     public Result InsertMonthAmountDetail(@RequestBody InsertFinancel insertFinancel) {
@@ -86,14 +89,30 @@ public class FinanceController {
         accountService.saveOrUpdate(account);
 
         MonthAmount monthAmount = monthAmountService.getByTime(insertFinancel.getYear(), insertFinancel.getMonth());
-        if("1".equals(insertFinancel.getAmountType())) {
-            monthAmount.setIncome(monthAmount.getIncome().add(insertFinancel.getAmount()));
-        } else if ("0".equals(insertFinancel.getAmountType())) {
-            monthAmount.setSpend(monthAmount.getSpend().add(insertFinancel.getAmount()));
+        if (monthAmount != null) {
+            if("1".equals(insertFinancel.getAmountType())) {
+                monthAmount.setIncome(monthAmount.getIncome().add(insertFinancel.getAmount()));
+            } else if ("0".equals(insertFinancel.getAmountType())) {
+                monthAmount.setSpend(monthAmount.getSpend().add(insertFinancel.getAmount()));
+            } else {
+                //todo  异常处理
+            }
         } else {
-            //todo  异常处理
+            monthAmount = new MonthAmount();
+            monthAmount.setMonth(insertFinancel.getMonth());
+            monthAmount.setAccountId(insertFinancel.getId());
+            monthAmount.setYear(insertFinancel.getYear());
+            if("1".equals(insertFinancel.getAmountType())) {
+                monthAmount.setIncome(insertFinancel.getAmount());
+                monthAmount.setSpend(BigDecimal.ZERO);
+            } else if ("0".equals(insertFinancel.getAmountType())) {
+                monthAmount.setIncome(BigDecimal.ZERO);
+                monthAmount.setSpend(insertFinancel.getAmount());
+            } else {
+                //todo  异常处理
+            }
         }
-        monthAmountService.updateById(monthAmount);
+        monthAmountService.saveOrUpdate(monthAmount);
 
         MonthAmountDetail monthAmountDetail = new MonthAmountDetail();
         monthAmountDetail.setMonthAmountId(monthAmount.getId());

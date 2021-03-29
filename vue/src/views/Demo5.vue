@@ -8,8 +8,8 @@
                         支出 ： {{item.spend}}
             <div v-for="detail in item.monthAmountDetailList" :key="detail.id">
              {{detail.time}} {{detail.reason}}
-             <div v-if="detail.amountType === '1'">支出</div>
-             <div v-else>收入</div>
+             <div v-if="detail.amountType === '1'">收入</div>
+             <div v-else>支出</div>
              {{detail.amount}} 
             </div>
         </li>
@@ -50,10 +50,12 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 export default {
   name: "demo5",
   data() {
     return {
+      result: {},
       money: 0,
       allAmount: 0,
       monthList: [],
@@ -73,28 +75,36 @@ export default {
     }
   },
   created() {
-      this.$http.get("/finance/index/1").then(response => {
-        var data = response.data
-        this.allAmount = data.totalAmount
-        this.monthList = data.monthAmountModelList
-
-      })
+    this.getFinance()
   },
   methods: {
+    getFinance() {
+      this.$http.get("/finance/index/1").then(response => {
+        console.log(response.data)
+        this.result = response.data
+        this.allAmount = this.result.totalAmount
+        this.monthList = this.result.monthAmountModelList
+
+      })
+    },
+
     income() {
       if (this.money === 0){
         alert("请输入正确的金额!!!")
       } else {
         let date = new Date();
         var insertFin = {}
-        insertFin.id = this.allAmount.id
-        insertFin.totalAmount = this.allAmount.totalAmount + this.money
-        insertFin.amountType = "0"
-        insertFin.year = date.getFullYear
-        insertFin.month = date.getMonth
-        insertFin.time = date.getFullYear + '-' + date.getMonth + '-' + date.getDay + ' ' + date.getHours + ' ' + date.getHours + ' ' + date.getMinutes
+        insertFin.id = this.result.id
+        insertFin.totalAmount = parseFloat(this.allAmount) + parseFloat(this.money)
+        insertFin.amountType = "1"
+        insertFin.year = date.getFullYear() 
+        insertFin.month = date.getMonth() + 1
+        if (insertFin.month < 10) {
+          insertFin.month = '0' + insertFin.month
+        }
+        insertFin.time = moment().format('YYYY-MM-DD HH:mm:ss')
         insertFin.reason = "测试阶段"
-        insertFin.money = this.money
+        insertFin.amount = parseFloat(this.money)
         console.log(insertFin)
         this.$http.post("/finance/insert", insertFin)
 

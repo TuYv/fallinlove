@@ -1,5 +1,6 @@
 package com.max.fallinlove.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class InsertFinancel {
 
     private int monthAmountDetailId;
 
+    @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
 
     private String amountType;
