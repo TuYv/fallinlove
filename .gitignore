@@ -33,3 +33,5 @@ build/
 .vscode/
 /vue/node_modules/
 /vue/dist/
+
+.DS_Store

@@ -1,5 +1,22 @@
 <template>
   <div>
+    <h1>记账 Demo</h1>
+    <ul>
+      <li>总金额：{{allAmount}}</li>
+        <li v-for="item in monthList" :key="item.id">
+          {{item.time}} 收入 ： {{item.income}}
+                        支出 ： {{item.spend}}
+            <div v-for="detail in item.monthAmountDetailList" :key="detail.id">
+             {{detail.time}} {{detail.reason}}
+             <div v-if="detail.amountType === '1'">支出</div>
+             <div v-else>收入</div>
+             {{detail.amount}} 
+            </div>
+        </li>
+    </ul>
+    <input type="number" v-model="money" placeholder="请输入金额">
+    <button @click="income">收入</button>
+    <button @click="spend">支出</button>
     <h1>v-on 事件绑定</h1>
     <div>{{number}}</div>
     <button v-on:click="add" >加1</button>
@@ -37,28 +54,15 @@ export default {
   name: "demo5",
   data() {
     return {
+      money: 0,
+      allAmount: 0,
+      monthList: [],
       number: 1,
       isShow: true,
       Student: [
         {
           id: 1,
           name: 'Apill'
-        },
-        {
-          id: 2,
-          name: 'Bob'
-        },
-        {
-          id: 3,
-          name: 'Clack'
-        },
-        {
-          id: 4,
-          name: 'David'
-        },
-        {
-          id: 5,
-          name: 'Eirc'
         },
       ],
       obj: {
@@ -68,10 +72,42 @@ export default {
       }
     }
   },
+  created() {
+      this.$http.get("/finance/index/1").then(response => {
+        var data = response.data
+        this.allAmount = data.totalAmount
+        this.monthList = data.monthAmountModelList
+
+      })
+  },
   methods: {
+    income() {
+      if (this.money === 0){
+        alert("请输入正确的金额!!!")
+      } else {
+        let date = new Date();
+        var insertFin = {}
+        insertFin.id = this.allAmount.id
+        insertFin.totalAmount = this.allAmount.totalAmount + this.money
+        insertFin.amountType = "0"
+        insertFin.year = date.getFullYear
+        insertFin.month = date.getMonth
+        insertFin.time = date.getFullYear + '-' + date.getMonth + '-' + date.getDay + ' ' + date.getHours + ' ' + date.getHours + ' ' + date.getMinutes
+        insertFin.reason = "测试阶段"
+        insertFin.money = this.money
+        console.log(insertFin)
+        this.$http.post("/finance/insert", insertFin)
+
+      }
+    },
+    spend() {
+      var insertFin = {}
+      insertFin.id = this.allAmount.id
+      insertFin
+      this.$http.post()
+    },
     add () {
       this.number++;
-      this.$http.get("test/test")
     },
     reduce(val) {
       if(typeof val === 'number') {

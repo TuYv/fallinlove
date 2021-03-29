@@ -12,9 +12,11 @@ import com.max.fallinlove.service.IAccountService;
 import com.max.fallinlove.service.IMonthAmountDetailService;
 import com.max.fallinlove.service.IMonthAmountService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @Api(tags = "账单相关API")
+@RequestMapping("/finance")
 public class FinanceController {
 
     @Autowired
@@ -43,8 +46,8 @@ public class FinanceController {
     @Autowired
     IMonthAmountDetailService monthAmountDetailService;
 
-    @RequestMapping(value = "/finance/index/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = "账单详情 - 【涂瑜】", notes = " ", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
+    @RequestMapping(value = "/index/{id}", method = RequestMethod.GET)
+    @Operation(summary = "账单详情 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
     public Result<FinanceIndexModel> getFinanceIndex(@PathVariable("id") int id) {
 
         Account account = accountService.getById(id);
@@ -54,10 +57,12 @@ public class FinanceController {
         List<MonthAmountModel> monthAmountModelList = new ArrayList<>();
         monthAmountList.forEach(x -> {
             List<MonthAmountDetail> monthAmountDetailList = monthAmountDetailService.getMonthAmountDetailList(x.getId());
+            monthAmountDetailList = monthAmountDetailList.stream().sorted(Comparator.comparing(MonthAmountDetail::getTime).reversed()).collect(
+                Collectors.toList());
             MonthAmountModel monthAmountModel = new MonthAmountModel();
             monthAmountModel.setId(x.getId());
             monthAmountModel.setAccountId(x.getAccountId());
-            monthAmountModel.setTime(x.getMonth());
+            monthAmountModel.setTime(x.getYear() + "." + x.getMonth());
             monthAmountModel.setIncome(x.getIncome());
             monthAmountModel.setSpend(x.getSpend());
             monthAmountModel.setMonthAmountDetailList(monthAmountDetailList);
@@ -65,13 +70,15 @@ public class FinanceController {
         });
         financeIndexModel.setId(account.getId());
         financeIndexModel.setTotalAmount(account.getTotalAmount());
+//        monthAmountModelList = monthAmountModelList.stream().sorted(Comparator.comparing(MonthAmountModel::getTime).reversed()).collect(
+//            Collectors.toList());
         financeIndexModel.setMonthAmountModelList(monthAmountModelList);
 
         return ResultUtils.success(financeIndexModel);
     }
 
-    @RequestMapping(value = "/finance/insert", method = RequestMethod.PUT)
-    @ApiOperation(value = "添加账单 - 【涂瑜】", notes = " ", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @Operation(summary = "添加账单 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
     public Result InsertMonthAmountDetail(@RequestBody InsertFinancel insertFinancel) {
         Account account = new Account();
         account.setId(insertFinancel.getId());
