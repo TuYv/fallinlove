@@ -1,22 +1,30 @@
 <template>
   <div>
-    <h1>记账 Demo</h1>
-    <ul>
-      <li>总金额：{{allAmount}}</li>
-        <li v-for="item in monthList" :key="item.id">
-          {{item.time}} 收入 ： {{item.income}}
-                        支出 ： {{item.spend}}
-            <div v-for="detail in item.monthAmountDetailList" :key="detail.id">
+    <el-container>
+      <el-header>记账 Demo</el-header>
+      <el-main>
+        <span>总金额：{{allAmount}}</span>
+      <el-table :data="monthList" style="width: 100%">
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <div v-for="detail in props.row.monthAmountDetailList" :key="detail.id">
              {{detail.time}} {{detail.reason}}
-             <div v-if="detail.amountType === '1'">收入</div>
-             <div v-else>支出</div>
+             <template v-if="detail.amountType === '1'">收入</template>
+             <template v-else>支出</template>
              {{detail.amount}} 
             </div>
-        </li>
-    </ul>
+          </template>
+        </el-table-column>
+        <el-table-column label="月份" prop="time"></el-table-column>
+        <el-table-column label="收入" prop="income"></el-table-column>
+        <el-table-column label="支出" prop="spend"></el-table-column>
+      </el-table>
     <input type="number" v-model="money" placeholder="请输入金额">
-    <button @click="income">收入</button>
-    <button @click="spend">支出</button>
+    <el-button type="success" round @click="income">收入</el-button>
+    <el-button type="danger" round @click="spend">支出</el-button>
+      </el-main>
+    </el-container>
+      
     <h1>v-on 事件绑定</h1>
     <div>{{number}}</div>
     <button v-on:click="add" >加1</button>
@@ -111,10 +119,21 @@ export default {
       }
     },
     spend() {
-      var insertFin = {}
-      insertFin.id = this.allAmount.id
-      insertFin
-      this.$http.post()
+        let date = new Date();
+        var insertFin = {}
+        insertFin.id = this.result.id
+        insertFin.totalAmount = parseFloat(this.allAmount) + parseFloat(this.money)
+        insertFin.amountType = "0"
+        insertFin.year = date.getFullYear() 
+        insertFin.month = date.getMonth() + 1
+        if (insertFin.month < 10) {
+          insertFin.month = '0' + insertFin.month
+        }
+        insertFin.time = moment().format('YYYY-MM-DD HH:mm:ss')
+        insertFin.reason = "测试阶段"
+        insertFin.amount = parseFloat(this.money)
+        console.log(insertFin)
+        this.$http.post("/finance/insert", insertFin)
     },
     add () {
       this.number++;
@@ -179,5 +198,16 @@ export default {
 </script>
 
 <style>
-
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
 </style>

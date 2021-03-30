@@ -35,3 +35,5 @@ build/
 /vue/dist/
 
 .DS_Store
+
+vue/encodeurl/
