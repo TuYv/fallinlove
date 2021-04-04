@@ -7,6 +7,7 @@ package com.max.fallinlove.constants;
  * @create: 2021-03-24 00:04
  **/
 public class RequestConstants {
+
     public static final String RETURN_STATUS_SUCCESS = "SUCCEED";
     public static final String RETURN_STATUS_FAILED = "FAILED";
 }

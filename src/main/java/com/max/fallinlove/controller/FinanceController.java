@@ -1,8 +1,13 @@
 package com.max.fallinlove.controller;
 
+import static com.max.fallinlove.constants.RedisConstants.FIN_DISTRIBUTED_LOCK;
+import static com.max.fallinlove.constants.RedisConstants.SET_IF_NOT_EXIST;
+import static com.max.fallinlove.constants.RedisConstants.SET_WITH_EXPIRE_TIME;
+
 import com.max.fallinlove.common.Result;
 import com.max.fallinlove.common.ResultUtils;
 import com.max.fallinlove.constants.FinanceConstants;
+import com.max.fallinlove.constants.RedisConstants;
 import com.max.fallinlove.entity.Account;
 import com.max.fallinlove.entity.MonthAmount;
 import com.max.fallinlove.entity.MonthAmountDetail;
@@ -19,7 +24,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +35,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.params.SetParams;
 
 /**
  * @program: fall-in-love
@@ -35,6 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author: Max.Tu
  * @create: 2021-03-23 22:47
  **/
+@Log4j2
 @CrossOrigin
 @RestController
 @Api(tags = "账单相关API")
@@ -42,11 +53,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class FinanceController {
 
     @Autowired
+    JedisPool jedisPool;
+    @Autowired
     IAccountService accountService;
-
     @Autowired
     IMonthAmountService monthAmountService;
-
     @Autowired
     IMonthAmountDetailService monthAmountDetailService;
 
@@ -79,6 +90,9 @@ public class FinanceController {
     @Operation(summary = "添加账单 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
     public Result InsertMonthAmountDetail(@RequestBody InsertFinancel insertFinancel) {
 
+        Jedis jedis = jedisPool.getResource();
+        String clientID = UUID.randomUUID().toString();
+        jedis.set(FIN_DISTRIBUTED_LOCK,clientID, SetParams.setParams().nx().ex(1800));
         //1.更新客户表
         Account account = new Account();
         account.setId(insertFinancel.getId());
@@ -88,6 +102,7 @@ public class FinanceController {
         //2. 获取月账单 如果没有就设置默认
         MonthAmount monthAmount = monthAmountService.getByTime(insertFinancel.getYear(), insertFinancel.getMonth());
         if (Objects.isNull(monthAmount)) {
+            //todo 可以设置成月初自动生成当月账单
             monthAmount = defaultMonthAmount(insertFinancel);
         }
         if (insertFinancel.getAmountType().equals(FinanceConstants.AMOUNT_TYPE_INCOME)) {
@@ -110,6 +125,28 @@ public class FinanceController {
         return ResultUtils.success();
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public Result testAmount() {
+        Jedis jedis = jedisPool.getResource();
+        String clientID = UUID.randomUUID().toString();
+        String result = jedis.set(FIN_DISTRIBUTED_LOCK,clientID, SetParams.setParams().nx().ex(30));
+        if ("OK".equals(result)) {
+            try {
+                Account account = accountService.getById(2);
+                account.setTotalAmount(account.getTotalAmount().add(BigDecimal.ONE));
+                log.info("总金额： " + account.getTotalAmount());
+                accountService.updateById(account);
+            }finally {
+                if(clientID.equals(jedis.get(FIN_DISTRIBUTED_LOCK))) {
+                    jedis.del(FIN_DISTRIBUTED_LOCK);
+                }
+            }
+        } else {
+            log.info("锁占用中");
+        }
+
+        return ResultUtils.success();
+    }
     /**
      * 设置默认月账单
      * @param insertFinancel
