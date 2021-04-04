@@ -130,6 +130,11 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!--Jedis依赖-->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

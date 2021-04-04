@@ -1,12 +1,24 @@
-# DataSource Config
+
 spring:
+  # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://47.98.142.214:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
     username: root
     password: root1234
+  # redis
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    timeout: 2000 #超时连接
+    jedis:
+      pool:
+        max-idle: 6 #最大空闲数
+        max-active: 10 #最大连接数
+        min-idle: 2 #最小空闲数
 
-#mybatis-plus
+  #mybatis-plus
   mybatis-plus:
     mapper-locations: classpath:com/max/fallinlove/mapper/xml/*.xml
     type-aliases-package: com.max.fallinlove.entity
@@ -27,3 +39,5 @@ springfox:
   documentation:
     swagger-ui:
       enabled: true
+
+
