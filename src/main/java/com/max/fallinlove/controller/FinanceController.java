@@ -4,6 +4,7 @@ import static com.max.fallinlove.constants.RedisConstants.FIN_DISTRIBUTED_LOCK;
 import static com.max.fallinlove.constants.RedisConstants.SET_IF_NOT_EXIST;
 import static com.max.fallinlove.constants.RedisConstants.SET_WITH_EXPIRE_TIME;
 
+import com.max.fallinlove.common.RedisTool;
 import com.max.fallinlove.common.Result;
 import com.max.fallinlove.common.ResultUtils;
 import com.max.fallinlove.constants.FinanceConstants;
@@ -20,6 +21,8 @@ import com.max.fallinlove.service.IMonthAmountService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -127,23 +130,27 @@ public class FinanceController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public Result testAmount() {
+        LocalDateTime start = LocalDateTime.now();
         Jedis jedis = jedisPool.getResource();
         String clientID = UUID.randomUUID().toString();
-        String result = jedis.set(FIN_DISTRIBUTED_LOCK,clientID, SetParams.setParams().nx().ex(30));
-        if ("OK".equals(result)) {
+        Boolean redisLock = RedisTool.lock(jedis,FIN_DISTRIBUTED_LOCK,clientID,30);
+        System.out.println("加锁耗时 " + Duration.between(start,LocalDateTime.now()).toMillis());
+        if (redisLock) {
             try {
                 Account account = accountService.getById(2);
                 account.setTotalAmount(account.getTotalAmount().add(BigDecimal.ONE));
                 log.info("总金额： " + account.getTotalAmount());
                 accountService.updateById(account);
+                System.out.println("SQL耗时 " + Duration.between(start,LocalDateTime.now()).toMillis());
             }finally {
-                if(clientID.equals(jedis.get(FIN_DISTRIBUTED_LOCK))) {
-                    jedis.del(FIN_DISTRIBUTED_LOCK);
-                }
+                RedisTool.unlock(jedis,FIN_DISTRIBUTED_LOCK,clientID);
+                System.out.println("解锁耗时 " + Duration.between(start,LocalDateTime.now()).toMillis());
             }
         } else {
             log.info("锁占用中");
         }
+        LocalDateTime end = LocalDateTime.now();
+        System.out.println("请求耗时：" + Duration.between(start, end).toMillis());
 
         return ResultUtils.success();
     }
