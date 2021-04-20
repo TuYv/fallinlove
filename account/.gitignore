@@ -31,33 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-/vue/node_modules/
-/vue/dist/
-
-.DS_Store
-
-vue/encodeurl/
-
-account/.mvn/wrapper/
-
-account/mvnw
-
-account/mvnw.cmd
-
-finance/.mvn/wrapper/
-
-finance/mvnw
-
-finance/mvnw.cmd
-
-gateway/.mvn/wrapper/
-
-gateway/mvnw
-
-gateway/mvnw.cmd
-
-notes/.mvn/wrapper/
-
-notes/mvnw.cmd
-
-notes/mvnw
