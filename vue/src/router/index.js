@@ -12,6 +12,8 @@ const Demo8 = () => import('../views/Demo8.vue')
 const Demo9 = () => import('../views/Demo9.vue')
 const Demo10 = () => import('../views/Demo10.vue')
 const Demo11 = () => import('../views/Demo11.vue')
+const Login = () => import('../components/Login.vue')
+const Register = () => import('../components/Register.vue')
 
 Vue.use(VueRouter)
 
@@ -83,6 +85,16 @@ const routes = [
     path: '/demo11',
     name: 'Demo11',
     component: Demo11
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
   }
 ]
 
