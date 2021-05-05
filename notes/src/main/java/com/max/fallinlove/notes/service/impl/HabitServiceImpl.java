@@ -1,9 +1,9 @@
-package com.max.fallinlove.service.impl;
+package com.max.fallinlove.notes.service.impl;
 
-import com.max.fallinlove.entity.Habit;
-import com.max.fallinlove.mapper.HabitMapper;
-import com.max.fallinlove.service.IHabitService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.max.fallinlove.notes.entity.Habit;
+import com.max.fallinlove.notes.mapper.HabitMapper;
+import com.max.fallinlove.notes.service.IHabitService;
 import org.springframework.stereotype.Service;
 
 /**

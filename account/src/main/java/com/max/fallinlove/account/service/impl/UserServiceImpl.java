@@ -1,19 +1,17 @@
-package com.max.fallinlove.service.impl;
+package com.max.fallinlove.account.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import cn.hutool.core.date.DatePattern;
-import com.max.fallinlove.common.Result;
-import com.max.fallinlove.common.ResultUtils;
-import com.max.fallinlove.dto.UserDTO;
-import com.max.fallinlove.entity.User;
-import com.max.fallinlove.mapper.UserMapper;
-import com.max.fallinlove.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.max.fallinlove.common.result.Result;
+import com.max.fallinlove.common.result.ResultUtils;
+import com.max.fallinlove.account.dto.UserDTO;
+import com.max.fallinlove.account.entity.User;
+import com.max.fallinlove.account.mapper.UserMapper;
+import com.max.fallinlove.account.service.IUserService;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

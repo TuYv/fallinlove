@@ -1,13 +1,13 @@
-package com.max.fallinlove.service.impl;
+package com.max.fallinlove.notes.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.max.fallinlove.common.Result;
-import com.max.fallinlove.common.ResultUtils;
-import com.max.fallinlove.dto.TodoDTO;
-import com.max.fallinlove.entity.Todo;
-import com.max.fallinlove.mapper.TodoMapper;
-import com.max.fallinlove.service.ITodoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.max.fallinlove.common.result.Result;
+import com.max.fallinlove.common.result.ResultUtils;
+import com.max.fallinlove.notes.dto.TodoDTO;
+import com.max.fallinlove.notes.entity.Todo;
+import com.max.fallinlove.notes.mapper.TodoMapper;
+import com.max.fallinlove.notes.service.ITodoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

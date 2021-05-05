@@ -1,12 +1,12 @@
-package com.max.fallinlove.notes.service.impl;
+package com.max.fallinlove.account.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
-import com.max.fallinlove.notes.entity.Relation;
-import com.max.fallinlove.notes.mapper.RelationMapper;
-import com.max.fallinlove.notes.mapper.UserMapper;
-import com.max.fallinlove.notes.service.IRelationService;
+import com.max.fallinlove.account.entity.Relation;
+import com.max.fallinlove.account.mapper.RelationMapper;
+import com.max.fallinlove.account.mapper.UserMapper;
+import com.max.fallinlove.account.service.IRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
