@@ -7,7 +7,7 @@
     <groupId>com.max</groupId>
     <artifactId>fall-in-love</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath/> <!-- lookup parent from repository -->
+    <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.max.fallinlove</groupId>
   <artifactId>finance</artifactId>
@@ -22,11 +22,102 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!--mybatis plus 包-->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>${mybatis-plus-boot-starter.version}</version>
+    </dependency>
+    <!--自动生成代码包-->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-generator</artifactId>
+      <version>${mybatis-plus-generator.version}</version>
+    </dependency>
+    <!--mysql 自动生成需要这个包-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <!--相关模板包-->
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-engine-core</artifactId>
+      <version>${velocity-engine-core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>${freemarker.version}</version>
+      <scope>compile</scope>
+    </dependency>
 
+    <!-- swagger3 begin -->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>${springfox-boot-starter.version}</version>
+    </dependency>
+    <!-- spring security -->
+    <!--<dependency>-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-starter-security</artifactId>-->
+    <!--</dependency>-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-all</artifactId>
+      <version>${hutool-all.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.junit.vintage</groupId>
+          <artifactId>junit-vintage-engine</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!--Jedis依赖-->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.max.fallinlove</groupId>
+      <artifactId>common</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 

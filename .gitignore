@@ -61,3 +61,9 @@ notes/.mvn/wrapper/
 notes/mvnw.cmd
 
 notes/mvnw
+
+common/.mvn/wrapper/
+
+common/mvnw
+
+common/mvnw.cmd
