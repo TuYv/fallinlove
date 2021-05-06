@@ -18,3 +18,72 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+    name: "login",
+    date() {
+        return {
+            user: {
+                username: "",
+                password: ""
+            }
+        };
+    },
+    created() {},
+    methods: {
+        doLogin() {
+            if(!this.user.username) {
+                this.$message.error("请输入用户名!")
+            }else if(!this.user.password) {
+                this.$message.error("请输入密码!")
+            }else {
+                this.$http.get("/max/user/login", this.user).then(res => {
+                    console.log(res)
+                })
+            }
+        }
+    }
+}
+</script>
+<style scoped>
+.login {
+  width: 100%;
+  height: 740px;
+  background: url("../assets/images/bg1.png") no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+.login-wrap {
+  background: url("../assets/images/login_bg.png") no-repeat;
+  background-size: cover;
+  width: 400px;
+  height: 300px;
+  margin: 215px auto;
+  overflow: hidden;
+  padding-top: 10px;
+  line-height: 40px;
+}
+#password {
+  margin-bottom: 5px;
+}
+h3 {
+  color: #0babeab8;
+  font-size: 24px;
+}
+hr {
+  background-color: #444;
+  margin: 20px auto;
+}
+a {
+  text-decoration: none;
+  color: #aaa;
+  font-size: 15px;
+}
+a:hover {
+  color: coral;
+}
+.el-button {
+  width: 80%;
+  margin-left: -50px;
+}
+</style>

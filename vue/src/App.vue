@@ -13,7 +13,8 @@
       <router-link to="/demo8">Demo8</router-link> |
       <router-link to="/demo9">Demo9</router-link> |
       <router-link to="/demo10">Demo10</router-link> |
-      <router-link to="/demo11">Demo11</router-link>
+      <router-link to="/demo11">Demo11</router-link> |
+      <router-link to="/login">Login</router-link>
     </div>
     <router-view/>
   </div>
