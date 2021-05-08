@@ -3,7 +3,7 @@
 <mapper namespace="com.max.fallinlove.account.mapper.UserMapper">
 
     <select id="selectByNameAndPwd" resultType="com.max.fallinlove.account.entity.User">
-        select * from user where name = #{name} and password = #{password};
+        select * from user where user_name = #{name} and password = #{password};
     </select>
 
     <select id="selectByNickName" resultType="com.max.fallinlove.account.entity.User">
