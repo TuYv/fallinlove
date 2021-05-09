@@ -3,9 +3,10 @@
         <div class="login-wrap">
             <el-row type="flow" justify="center">
               <el-form ref="loginForm" :model="user" :rules="rules" status-icon label-width="80px">
-                  <h3>登陆</h3>
-                  <hr>
-                  <el-form-item label="用户名" prop="username">
+                  <h3>登 录</h3>
+                  <br>
+                  <!-- <hr> -->
+                  <el-form-item label="用户名" prop="username" >
                       <el-input v-model="user.username" placeholder="请输入用户名" maxlength="12" prefix-icon />
                   </el-form-item>
                   <el-form-item label="密码" prop="password" id="password">
@@ -53,13 +54,13 @@ export default {
 .login {
   width: 100%;
   height: 740px;
-  background: url("../assets/images/bg1.jpg") no-repeat;
+  background: url("../assets/images/bg1.jpeg") no-repeat;
   background-size: cover;
   overflow: hidden;
 }
 .login-wrap {
-  background: url("../assets/images/login_bg.jpg") no-repeat;
-  background-size: cover;
+  /* background: url("../assets/images/login_bg.jpg") no-repeat;
+  background-size: cover; */
   width: 400px;
   height: 300px;
   margin: 215px auto;
@@ -71,11 +72,11 @@ export default {
   margin-bottom: 5px;
 }
 h3 {
-  color: #0babeab8;
+  color: #ffffffb8;
   font-size: 24px;
 }
 hr {
-  background-color: #444;
+  background-color: rgb(255, 255, 255);
   margin: 20px auto;
 }
 a {
