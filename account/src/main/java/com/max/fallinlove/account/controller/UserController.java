@@ -7,9 +7,7 @@ import com.max.fallinlove.account.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-10-23
  */
 @Api(tags = "用户模块")
+@CrossOrigin
 @RestController
 @RequestMapping("/max/user")
 public class UserController {
@@ -29,13 +28,13 @@ public class UserController {
 
     @Operation(summary = "登录")
     @GetMapping("/login")
-    public Result login(String userName, String password) {
+    public Result login( String userName, String password) {
         return userService.login(userName, password);
     }
 
     @Operation(summary = "注册")
-    @GetMapping("/register")
-    public Result register(UserDTO userDTO) {
+    @PostMapping("/register")
+    public Result register(@RequestBody UserDTO userDTO) {
         return userService.register(userDTO);
     }
 }
