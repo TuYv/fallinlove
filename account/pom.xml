@@ -129,7 +129,7 @@
     <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     <version>${nacos.version}</version>
-  </dependency>
+    </dependency>
   </dependencies>
 
   <build>
