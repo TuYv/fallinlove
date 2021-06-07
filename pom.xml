@@ -39,6 +39,7 @@
     <fastjson.version>1.2.47</fastjson.version>
     <hutool-all.version>5.4.0</hutool-all.version>
     <nacos.version>2.2.5.RELEASE</nacos.version>
+    <gateway.version>2.2.5.RELEASE</gateway.version>
   </properties>
 
   <dependencies>

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: fallinlove-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://121.5.170.146:8848
+      config:
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        server-addr: http://121.5.170.146:8848
