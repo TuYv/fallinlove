@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "用户模块")
 @CrossOrigin
 @RestController
-@RequestMapping("/max/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
