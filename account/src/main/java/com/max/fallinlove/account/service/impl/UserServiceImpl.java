@@ -12,6 +12,9 @@ import com.max.fallinlove.account.service.IUserService;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.max.fallinlove.common.utils.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,7 @@ import org.springframework.stereotype.Service;
  * @author max.tu
  * @since 2020-10-23
  */
+@Slf4j
 @Service
 public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements IUserService {
 
@@ -44,7 +48,9 @@ public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements
         }*/
         User user = userMapper.selectByNameAndPwd(userName, password);
         if (Objects.nonNull(user)) {
-            return ResultUtils.success(user);
+            String token = JwtUtil.createToken(user.getId().toString());
+            log.info("生成的token为：" + token);
+            return ResultUtils.success(token);
         }else {
             return ResultUtils.fail("200", "数据不存在");
         }
@@ -70,6 +76,12 @@ public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements
         return ResultUtils.success();
     }
 
+    /**
+     * 验证注册信息是否符合要求
+     * @param userName
+     * @param password
+     * @return
+     */
     private boolean verifyMessage(String userName, String password) {
         Matcher m = NAME_PATTERN.matcher(userName);
         if (m.matches()) {
