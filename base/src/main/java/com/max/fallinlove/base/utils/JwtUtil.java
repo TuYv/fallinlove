@@ -1,4 +1,4 @@
-package com.max.fallinlove.common.utils;
+package com.max.fallinlove.base.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

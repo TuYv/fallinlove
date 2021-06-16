@@ -1,6 +1,6 @@
 package com.max.fallinlove.common.result;
 
-import com.max.fallinlove.common.constants.RequestConstants;
+import com.max.fallinlove.base.constants.RequestConstants;
 import java.util.Date;
 import java.util.UUID;
 

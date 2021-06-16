@@ -1,4 +1,4 @@
-package com.max.fallinlove.common.constants;
+package com.max.fallinlove.base.constants;
 
 /**
  * @program: fall-in-love

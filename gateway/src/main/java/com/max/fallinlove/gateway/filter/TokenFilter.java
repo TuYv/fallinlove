@@ -1,13 +1,12 @@
 package com.max.fallinlove.gateway.filter;
 
-import com.max.fallinlove.common.utils.JwtUtil;
+import com.max.fallinlove.base.utils.JwtUtil;
 import com.max.fallinlove.gateway.common.RedisOperater;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -21,7 +20,7 @@ import java.util.Objects;
  * @date 2021/6/15 20:20
  */
 @Slf4j
-@Component
+//@Component
 public class TokenFilter implements GlobalFilter, Ordered {
 
     @Autowired
@@ -29,6 +28,9 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        if(exchange.getRequest().getURI().getPath().equals("/account/login")) {
+            return chain.filter(exchange);
+        }
         String token = Objects.requireNonNull(exchange.getRequest().getHeaders().get("Authorization")).get(0);
         String id = Objects.requireNonNull(exchange.getRequest().getHeaders().get("id").get(0));
         log.info("获取到的token为:" + token);
