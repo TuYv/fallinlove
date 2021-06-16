@@ -2,7 +2,7 @@ import axios from 'axios'
 
 //创建一个axios实例
 const service = axios.create({
-    baseURL: 'http://localhost:8082/',
+    baseURL: 'http://localhost:8081/',
     // 请求超时时间
     timeout: 30000
 })
@@ -10,6 +10,10 @@ const service = axios.create({
 //请求拦截器
 service.interceptors.request.use(
     config => {
+        //添加token
+        if (localStorage.JWT_TOKEN) {
+            config.headers.Authorization = `token ${localStorage.JWT_TOKEN}`;
+        }
         return config
     },
     err => {

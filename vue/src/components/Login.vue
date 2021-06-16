@@ -42,9 +42,10 @@ export default {
             }else if(!this.user.password) {
                 this.$message.error("请输入密码!")
             }else {
-                this.$http.get("/max/user/login?userName=" + this.user.username + "&password=" + this.user.password).then(res => {
+                this.$http.get("/account/user/login?userName=" + this.user.username + "&password=" + this.user.password).then(res => {
                     console.log(res)
                     if(res.returnStatus === 'SUCCEED') {
+                        localStorage.JWT_TOKEN = res.data;
                        this.$router.push({ path: "/" });
                     } else{
                       this.$message.error(res.errorMessage)

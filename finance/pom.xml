@@ -108,11 +108,28 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!--Jedis依赖-->
+    <!--nacos-->
     <dependency>
-      <groupId>redis.clients</groupId>
-      <artifactId>jedis</artifactId>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+      <version>${nacos.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+      <version>${nacos.version}</version>
+    </dependency>
+    <!--redis-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+    <!--使用lettuce配置需要的包 使用netty  比jedis直连好使-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-pool2</artifactId>
+    </dependency>
+    <!--本地工具类-->
     <dependency>
       <groupId>com.max.fallinlove</groupId>
       <artifactId>common</artifactId>
@@ -126,6 +143,10 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <!--fork:如果没有该项配置,整个devtools不会起作用-->
+          <fork>true</fork>
+        </configuration>
       </plugin>
     </plugins>
   </build>

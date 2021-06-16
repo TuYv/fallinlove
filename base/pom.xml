@@ -13,7 +13,7 @@
   <artifactId>base</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>base</name>
-  <description>Demo project for Spring Boot</description>
+  <description>基础功能模块</description>
   <properties>
     <java.version>1.8</java.version>
   </properties>
