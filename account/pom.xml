@@ -136,12 +136,6 @@
       <version>0.0.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>com.max.fallinlove</groupId>
-      <artifactId>base</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -149,6 +143,10 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <!--fork:如果没有该项配置,整个devtools不会起作用-->
+          <fork>true</fork>
+        </configuration>
       </plugin>
     </plugins>
   </build>
