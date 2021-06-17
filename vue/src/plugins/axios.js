@@ -19,9 +19,12 @@ const _axios = axios.create(config);
 _axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
+    console.log("进入请求拦截器")
     var user = localStorage.getItem("user");
+    console.log('嘻嘻' + user);
     if(user) {
-      config.headers['Authorization'] = user.token;
+      config.headers['id'] = user.id;
+      //config.headers['Authorization'] = user.token;
     }
     return config;
   },

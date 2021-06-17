@@ -46,6 +46,8 @@ export default {
                     console.log(res)
                     if(res.returnStatus === 'SUCCEED') {
                       localStorage.setItem("user", JSON.stringify(res.data));
+                      var user = localStorage.getItem("user");
+                      console.log('呵呵' + user);
                        this.$router.push({ path: "/" });
                     } else{
                       this.$message.error(res.errorMessage)
