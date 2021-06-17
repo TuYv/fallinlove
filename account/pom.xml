@@ -129,6 +129,13 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-pool2</artifactId>
     </dependency>
+    <!--添加热部署-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <optional>true</optional>
+      <scope>true</scope>
+    </dependency>
     <!--本地工具类-->
     <dependency>
       <groupId>com.max.fallinlove</groupId>

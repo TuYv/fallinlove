@@ -45,7 +45,7 @@ export default {
                 this.$http.get("/account/user/login?userName=" + this.user.username + "&password=" + this.user.password).then(res => {
                     console.log(res)
                     if(res.returnStatus === 'SUCCEED') {
-                        localStorage.JWT_TOKEN = res.data;
+                      localStorage.setItem("user", JSON.stringify(res.data));
                        this.$router.push({ path: "/" });
                     } else{
                       this.$message.error(res.errorMessage)

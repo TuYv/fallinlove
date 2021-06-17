@@ -48,9 +48,12 @@ public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements
         }*/
         User user = userMapper.selectByNameAndPwd(userName, password);
         if (Objects.nonNull(user)) {
+            UserDTO dto = new UserDTO();
+            BeanUtil.copyProperties(user,dto,true);
             String token = JwtUtil.createToken(user.getId().toString());
             log.info("生成的token为：" + token);
-            return ResultUtils.success(token);
+            dto.setToken(token);
+            return ResultUtils.success(dto);
         }else {
             return ResultUtils.fail("200", "数据不存在");
         }

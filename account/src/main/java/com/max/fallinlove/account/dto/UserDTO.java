@@ -22,4 +22,7 @@ public class UserDTO {
 
     @ApiModelProperty("对象id")
     private Integer loverId;
+
+    @ApiModelProperty("token")
+    private String token;
 }

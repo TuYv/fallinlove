@@ -25,6 +25,22 @@ spring:
                 redis-rate-limiter.burstCapacity: 5 # 每秒最大处理的请求数量
                 key-resolver: "#{@ipKeyResolver}" # 限流策略，对应策略的Bean
             - StripPrefix=1
+        - id: fallinlove-finance
+          uri: lb://fallinlove-finance
+          predicates:
+            - Path=/finance/**
+          filters:
+            #todo 降级配置
+            #限流配置
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 3 # 每秒允许处理的请求数量
+                redis-rate-limiter.burstCapacity: 5 # 每秒最大处理的请求数量
+                key-resolver: "#{@ipKeyResolver}" # 限流策略，对应策略的Bean
+            - StripPrefix=1
+      default-filters:
+        - DedupeResponseHeader=Vary Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_UNIQUE
+        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
     # redis
   redis:
     host: 121.5.170.146

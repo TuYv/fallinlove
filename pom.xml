@@ -10,6 +10,7 @@
     <module>finance</module>
     <module>notes</module>
     <module>common</module>
+    <module>base</module>
   </modules>
 
   <parent>

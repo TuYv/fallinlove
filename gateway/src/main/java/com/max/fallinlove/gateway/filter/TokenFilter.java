@@ -20,7 +20,7 @@ import java.util.Objects;
  * @date 2021/6/15 20:20
  */
 @Slf4j
-//@Component
+@Component
 public class TokenFilter implements GlobalFilter, Ordered {
 
     @Autowired
@@ -28,11 +28,12 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        if(exchange.getRequest().getURI().getPath().equals("/account/login")) {
+        //设置白名单
+        if(exchange.getRequest().getURI().getPath().equals("/account/user/login")) {
             return chain.filter(exchange);
         }
         String token = Objects.requireNonNull(exchange.getRequest().getHeaders().get("Authorization")).get(0);
-        String id = Objects.requireNonNull(exchange.getRequest().getHeaders().get("id").get(0));
+        String id = Objects.requireNonNull(exchange.getRequest().getHeaders().get("id")).get(0);
         log.info("获取到的token为:" + token);
         String idInToken = JwtUtil.verifyToken(token);
         if (id.equals(idInToken)) {
