@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     getFinance() {
-      this.$http.get("/finance/index/1").then(response => {
+      this.$http.get("/finance/billing/1").then(response => {
         console.log(response.data)
         this.result = response.data
         this.allAmount = this.result.totalAmount

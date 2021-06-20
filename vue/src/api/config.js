@@ -4,15 +4,17 @@ import axios from 'axios'
 const service = axios.create({
     baseURL: 'http://localhost:8081/',
     // 请求超时时间
-    timeout: 30000
+    timeout: 60000
 })
 
 //请求拦截器
 service.interceptors.request.use(
     config => {
         //添加token
-        if (localStorage.JWT_TOKEN) {
-            config.headers.Authorization = `token ${localStorage.JWT_TOKEN}`;
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            config.headers['Authorization'] = user.token;
+            config.headers['id'] = user.id;
         }
         return config
     },

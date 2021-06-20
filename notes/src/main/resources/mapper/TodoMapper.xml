@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.max.fallinlove.mapper.TodoMapper">
 
-  <select id="selectByUserId" resultType="com.max.fallinlove.entity.Todo">
+  <select id="selectByUserId" resultType="com.max.fallinlove.notes.entity.Todo">
     select * from todo where user_id = #{userId}
   </select>
 
