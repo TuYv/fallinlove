@@ -83,6 +83,10 @@ export default {
     }
   },
   created() {
+    // let user = JSON.parse(localStorage.getItem('user'));
+    // if(!user) {
+    //   this.$router.push('/login');
+    // }
     this.getFinance()
   },
   methods: {

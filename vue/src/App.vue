@@ -1,20 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/home">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/demo1">Demo1</router-link> |
-      <router-link to="/demo2">Demo2</router-link> |
-      <router-link to="/demo3">Demo3</router-link> |
-      <router-link to="/demo4">Demo4</router-link> |
-      <router-link to="/">finance</router-link> |
-      <router-link to="/demo6">Demo6</router-link> |
-      <router-link to="/demo7">Demo7</router-link> |
-      <router-link to="/demo8">Demo8</router-link> |
-      <router-link to="/demo9">Demo9</router-link> |
-      <router-link to="/demo10">Demo10</router-link> |
-      <router-link to="/demo11">Demo11</router-link>
-    </div>
     <router-view/>
   </div>
 </template>

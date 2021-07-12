@@ -19,72 +19,74 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import( '../views/About.vue')
-  },
-  {
-    path: '/demo1',
-    name: 'Demo1',
-    component: Demo1
-  },
-  {
-    path: '/demo2',
-    name: 'Demo2',
-    component: Demo2
-  },
-  {
-    path: '/demo3',
-    name: 'Demo3',
-    component: Demo3
-  },
-  {
-    path: '/demo4',
-    name: 'Demo4',
-    component: Demo4
-  },
-  {
     path: '/',
-    name: 'Demo5',
-    component: Demo5
-  },
-  {
-    path: '/demo6',
-    name: 'Demo6',
-    component: Demo6
-  },
-  {
-    path: '/demo7',
-    name: 'Demo7',
-    component: Demo7
-  },
-  {
-    path: '/demo8',
-    name: 'Demo8',
-    component: Demo8
-  },
-  {
-    path: '/demo9',
-    name: 'Demo9',
-    component: Demo9
-  },
-  {
-    path: '/demo10',
-    name: 'Demo10',
-    component: Demo10
-  },
-  {
-    path: '/demo11',
-    name: 'Demo11',
-    component: Demo11
+    name: 'Home',
+    component: Home,
+    children: [
+      {
+        path: '/about',
+        name: 'About',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import( '../views/About.vue')
+      },
+      {
+        path: '/demo1',
+        name: 'Demo1',
+        component: Demo1
+      },
+      {
+        path: '/demo2',
+        name: 'Demo2',
+        component: Demo2
+      },
+      {
+        path: '/demo3',
+        name: 'Demo3',
+        component: Demo3
+      },
+      {
+        path: '/demo4',
+        name: 'Demo4',
+        component: Demo4
+      },
+      {
+        path: '/',
+        name: 'Demo5',
+        component: Demo5
+      },
+      {
+        path: '/demo6',
+        name: 'Demo6',
+        component: Demo6
+      },
+      {
+        path: '/demo7',
+        name: 'Demo7',
+        component: Demo7
+      },
+      {
+        path: '/demo8',
+        name: 'Demo8',
+        component: Demo8
+      },
+      {
+        path: '/demo9',
+        name: 'Demo9',
+        component: Demo9
+      },
+      {
+        path: '/demo10',
+        name: 'Demo10',
+        component: Demo10
+      },
+      {
+        path: '/demo11',
+        name: 'Demo11',
+        component: Demo11
+      }
+    ]
   },
   {
     path: '/login',
