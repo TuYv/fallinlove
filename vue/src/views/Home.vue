@@ -91,7 +91,6 @@
       },
       exit() {
         console.log("进入退出登录接口")
-        this.user = null;
         localStorage.removeItem('user');
         this.$router.push('/login');
       }
