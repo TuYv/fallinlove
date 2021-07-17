@@ -3,20 +3,18 @@
     <el-container style="border: 1px solid #eee">
     <el-header style="text-align: right; font-size: 12px">
       <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 15px"></i>
+        <i class="el-icon-setting" style="margin-right: 15px"> {{user.userName}}</i>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>删除</el-dropdown-item>
+          <el-dropdown-item>查看详情</el-dropdown-item>
+          <el-dropdown-item @click.native="exit">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span>王小虎</span>
     </el-header>
     <el-container>
-      <el-aside style="width=10px background-color: rgb(238, 241, 246)">
+      <el-aside style="width: 200px">
         <el-menu
           default-active="this.$route.path"
-          router mode="horizontal"
+          router mode="vertical"
       class="el-menu-vertical-demo"
            @open="handleOpen"
       @close="handleClose">
@@ -58,6 +56,7 @@
       };
       return {
         tableData: Array(20).fill(item),
+        user: "",
         navList: [
           {title:"/about",name:"about"},
           {title:"/demo1",name:"demo1"},
@@ -74,13 +73,27 @@
 
         ]
       }
-    },
+    },  
+    created() {
+     let localUser = JSON.parse(localStorage.getItem('user'));
+     if(!localUser) {
+       this.$router.push('/login');
+     } else {
+       this.user = localUser;
+     }
+  },
     methods: {
       handleOpen(key, keyPath) {
         console.log("test" + key + keyPath);
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      exit() {
+        console.log("进入退出登录接口")
+        this.user = null;
+        localStorage.removeItem('user');
+        this.$router.push('/login');
       }
     }
   };
