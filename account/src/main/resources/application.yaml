@@ -5,21 +5,21 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 121.5.170.146:8848
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #服务器
-    #url: jdbc:mysql://121.5.170.146:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://121.5.170.146:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true
     #本地
-    url: jdbc:mysql://127.0.0.1:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
+    #url: jdbc:mysql://127.0.0.1:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
     username: root
     password: root1234
   # redis
   redis:
-    host: 127.0.0.1
+    host: 121.5.170.146
     port: 6379
-    password:
+    password: pass@123
     timeout: 2000 #超时连接
     lettuce:
       pool:

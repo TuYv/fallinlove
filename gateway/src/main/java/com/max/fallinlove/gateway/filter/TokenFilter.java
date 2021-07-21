@@ -29,7 +29,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         //设置白名单
-        if(exchange.getRequest().getURI().getPath().equals("/account/user/login")) {
+        if(exchange.getRequest().getURI().getPath().equals("/account/user/login") || exchange.getRequest().getURI().getPath().equals("/account/user/register")) {
             return chain.filter(exchange);
         }
         String token = Objects.requireNonNull(exchange.getRequest().getHeaders().get("Authorization")).get(0);

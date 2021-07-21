@@ -5,7 +5,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 121.5.170.146:8848
     gateway:
       discovery:  #是否与服务发现组件进行结合，通过 serviceId(必须设置成大写) 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能。
         locator:  #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId，其中微服务应用名默认大写访问。
@@ -43,9 +43,9 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
     # redis
   redis:
-    host: 127.0.0.1
+    host: 121.5.170.146
     port: 6379
-    password:
+    password: pass@123
     timeout: 2000 #超时连接
     lettuce:
       pool:
@@ -56,11 +56,11 @@ spring:
   datasource:
    driver-class-name: com.mysql.cj.jdbc.Driver
     #服务器
-   #url: jdbc:mysql://121.5.170.146:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
+   url: jdbc:mysql://121.5.170.146:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
     #本地
-   url: jdbc:mysql://127.0.0.1:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
+   #url: jdbc:mysql://127.0.0.1:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
    username: root
-   password: root1234
+   password: 1qaz#EDC
 
     #mybatis-plus
   mybatis-plus:
