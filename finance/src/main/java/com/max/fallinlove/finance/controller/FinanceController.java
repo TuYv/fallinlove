@@ -89,11 +89,11 @@ public class FinanceController {
 //        Jedis jedis = jedisPool.getResource();
 //        String clientID = UUID.randomUUID().toString();
 //        jedis.set(FIN_DISTRIBUTED_LOCK,clientID, SetParams.setParams().nx().ex(1800));
-        //1.更新客户表
-        Account account = new Account();
-        account.setId(insertFinancel.getId());
-        account.setTotalAmount(insertFinancel.getTotalAmount());
-        accountService.saveOrUpdate(account);
+        //1.更新账户表
+        //Account account = new Account();
+        //account.setId(insertFinancel.getId());
+        //account.setTotalAmount(insertFinancel.getTotalAmount());
+        //accountService.saveOrUpdate(account);
 
         //2. 获取月账单 如果没有就设置默认
         MonthAmount monthAmount = monthAmountService.getByTime(insertFinancel.getYear(), insertFinancel.getMonth());

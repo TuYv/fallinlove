@@ -8,10 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
- * 
- * </p>
- *
  * @author max.tu
  * @since 2021-03-23
  */
@@ -21,8 +17,8 @@ public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "Id", type = IdType.AUTO)
-    private Integer Id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private BigDecimal totalAmount;
 
