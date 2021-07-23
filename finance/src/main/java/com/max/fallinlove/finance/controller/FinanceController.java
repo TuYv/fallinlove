@@ -23,15 +23,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @program: fall-in-love
@@ -63,11 +58,11 @@ public class FinanceController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Operation(summary = "账单详情 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
-    public Result getFinanceIndex(@PathVariable("id") int id) {
+    public Result getFinanceIndex(@PathVariable("id") int id, @RequestHeader("id") int userId) {
         log.info("开始获取账单详情");
-
         //获取用户账户总金额和每月金额
         Account account = accountService.getById(id);
+
         List<MonthAmount> monthAmountList = monthAmountService.getAllMonthAmountByAccountId(account.getId());
 
         //获取用户日金额

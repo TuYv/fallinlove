@@ -3,12 +3,16 @@ package com.max.fallinlove.account.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.max.fallinlove.account.entity.Account;
+import com.max.fallinlove.account.mapper.AccountMapper;
 import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
 import com.max.fallinlove.account.dto.UserDTO;
 import com.max.fallinlove.account.entity.User;
 import com.max.fallinlove.account.mapper.UserMapper;
 import com.max.fallinlove.account.service.IUserService;
+
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +37,8 @@ public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private AccountMapper accountMapper;
 
     private static final Pattern NAME_PATTERN = Pattern.compile("^[\\u4e00-\\u9fa5_a-zA-Z0-9]+$");
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9$@!.%*#_~?&]{8,16}$");
@@ -71,9 +77,16 @@ public class UserServiceImpl<T> extends ServiceImpl<UserMapper, User> implements
         if(Objects.nonNull(user)) {
             return ResultUtils.fail("200", "该昵称已存在");
         } else {
-            user = new User();
-            BeanUtil.copyProperties(userDTO, user, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
-            userMapper.insert(user);
+            //新增account记录
+            Account account = new Account();
+            account.setTotalAmount(BigDecimal.ZERO);
+            int result = accountMapper.insert(account);
+            if(result > 0) {
+                user = new User();
+                BeanUtil.copyProperties(userDTO, user, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+                user.setAccountId(account.getId());
+                userMapper.insert(user);
+            }
         }
 
         return ResultUtils.success();

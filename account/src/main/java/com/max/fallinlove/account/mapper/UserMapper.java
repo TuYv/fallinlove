@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * </p>
  *
  * @author max.tu
- * @since 2020-10-23
+ * @since 2021-07-23
  */
 public interface UserMapper extends BaseMapper<User> {
 

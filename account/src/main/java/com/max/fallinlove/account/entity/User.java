@@ -2,9 +2,10 @@ package com.max.fallinlove.account.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -12,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author max.tu
- * @since 2020-10-23
+ * @since 2021-07-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -45,6 +46,11 @@ public class User implements Serializable {
      * 对象id
      */
     private Integer loverId;
+
+    /**
+     * 账户表Id
+     */
+    private Integer accountId;
 
 
 }

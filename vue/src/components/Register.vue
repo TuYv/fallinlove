@@ -46,7 +46,7 @@ export default {
       } else if (!this.user.password) {
           this.$message.error("请输入密码！");
         } else {
-            this.$http.post("/max/user/register",this.user).then(res => { 
+            this.$http.post("/account/user/register",this.user).then(res => { 
               if (res.returnStatus === 'SUCCEED') {
                 this.$router.push({ path: "/login" });
               } else {

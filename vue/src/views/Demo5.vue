@@ -91,7 +91,8 @@ export default {
   },
   methods: {
     getFinance() {
-      this.$http.get("/finance/billing/1").then(response => {
+     let localUser = JSON.parse(localStorage.getItem('user'));
+      this.$http.get("/finance/billing/" + localUser.id).then(response => {
         console.log(response.data)
         this.result = response.data
         this.allAmount = this.result.totalAmount
