@@ -19,9 +19,10 @@
         <el-table-column label="收入" prop="income"></el-table-column>
         <el-table-column label="支出" prop="spend"></el-table-column>
       </el-table>
-    <input type="number" v-model="money" placeholder="请输入金额">
-    <el-button type="success" round @click="income">收入</el-button>
-    <el-button type="danger" round @click="spend">支出</el-button>
+      <el-input-number v-model="money" label="请输入金额" />
+    <el-input v-model="reason" placeholder="请输入备注" />
+    <el-button type="success" round @click="income('1')">收入</el-button>
+    <el-button type="danger" round @click="income('0')">支出</el-button>
       </el-main>
     </el-container>
       
@@ -68,6 +69,7 @@ export default {
       allAmount: 0,
       monthList: [],
       number: 1,
+      reason: "",
       isShow: true,
       Student: [
         {
@@ -92,7 +94,7 @@ export default {
   methods: {
     getFinance() {
      let localUser = JSON.parse(localStorage.getItem('user'));
-      this.$http.get("/finance/billing/" + localUser.id).then(response => {
+      this.$http.get("/finance/billing/" + localUser.accountId).then(response => {
         console.log(response.data)
         this.result = response.data
         this.allAmount = this.result.totalAmount
@@ -101,7 +103,7 @@ export default {
       })
     },
 
-    income() {
+    income(type) {
       if (this.money === 0){
         alert("请输入正确的金额!!!")
       } else {
@@ -116,10 +118,10 @@ export default {
           insertFin.month = '0' + insertFin.month
         }
         insertFin.time = moment().format('YYYY-MM-DD HH:mm:ss')
-        insertFin.reason = "测试阶段"
+        insertFin.reason = this.reason
         insertFin.amount = parseFloat(this.money)
         console.log(insertFin)
-        this.$http.post("/finance/insert", insertFin)
+        this.$http.post("/finance/billing/insert", insertFin)
 
       }
     },
@@ -138,7 +140,7 @@ export default {
         insertFin.reason = "测试阶段"
         insertFin.amount = parseFloat(this.money)
         console.log(insertFin)
-        this.$http.post("/finance/insert", insertFin)
+        this.$http.post("/finance/billing/insert", insertFin)
     },
     add () {
       this.number++;

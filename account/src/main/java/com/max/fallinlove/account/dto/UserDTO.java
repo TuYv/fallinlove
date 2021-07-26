@@ -23,6 +23,9 @@ public class UserDTO {
     @ApiModelProperty("对象id")
     private Integer loverId;
 
+    @ApiModelProperty("账户ID")
+    private String accountId;
+
     @ApiModelProperty("token")
     private String token;
 }
