@@ -35,7 +35,7 @@ public class MonthAmountDetail implements Serializable {
 
     private String reason;
 
-    private String remark;
+    private String tag;
 
 
 }

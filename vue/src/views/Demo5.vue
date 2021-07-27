@@ -27,6 +27,7 @@
       value-format="yyyy-MM-dd">
     </el-date-picker>
       <el-input-number v-model="money" label="请输入金额" />
+    <el-input v-model="tag" placeholder="请输入标签" />
     <el-input v-model="reason" placeholder="请输入备注" />
     <el-button type="success" round @click="income('1')">收入</el-button>
     <el-button type="danger" round @click="income('0')">支出</el-button>
@@ -77,6 +78,7 @@ export default {
       monthList: [],
       number: 1,
       reason: "",
+      tag: "",
       time: new Date(),
       isShow: true,
       Student: [

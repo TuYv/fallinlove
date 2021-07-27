@@ -115,7 +115,7 @@ public class FinanceController {
         monthAmountDetail.setAmountType(insertFinancel.getAmountType());
         monthAmountDetail.setTime(insertFinancel.getTime());
         monthAmountDetail.setReason(insertFinancel.getReason());
-        monthAmountDetail.setRemark(insertFinancel.getRemark());
+        monthAmountDetail.setTag(insertFinancel.getTag());
         monthAmountDetailService.save(monthAmountDetail);
 
         return ResultUtils.success();
