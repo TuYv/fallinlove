@@ -30,6 +30,11 @@ service.interceptors.response.use(
         const res = response.data;
         return res;
     }, err => {
+        console.log(err.response)
+        const {status} = err.response
+        if(status === 401) {
+            localStorage.removeItem('user');
+        }
         console.error(err)
         Promise.reject(err)
     }

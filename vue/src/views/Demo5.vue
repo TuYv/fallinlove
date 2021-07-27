@@ -19,6 +19,13 @@
         <el-table-column label="收入" prop="income"></el-table-column>
         <el-table-column label="支出" prop="spend"></el-table-column>
       </el-table>
+    <el-date-picker
+      v-model="time"
+      type="date"
+      placeholder="选择日期"
+      format="yyyy 年 MM 月 dd 日"
+      value-format="yyyy-MM-dd">
+    </el-date-picker>
       <el-input-number v-model="money" label="请输入金额" />
     <el-input v-model="reason" placeholder="请输入备注" />
     <el-button type="success" round @click="income('1')">收入</el-button>
@@ -70,6 +77,7 @@ export default {
       monthList: [],
       number: 1,
       reason: "",
+      time: new Date(),
       isShow: true,
       Student: [
         {
@@ -112,12 +120,9 @@ export default {
         insertFin.id = this.result.id
         insertFin.totalAmount = parseFloat(this.allAmount) + parseFloat(this.money)
         insertFin.amountType = "1"
-        insertFin.year = date.getFullYear() 
-        insertFin.month = date.getMonth() + 1
-        if (insertFin.month < 10) {
-          insertFin.month = '0' + insertFin.month
-        }
-        insertFin.time = moment().format('YYYY-MM-DD HH:mm:ss')
+        insertFin.year = this.time.splice(0,3)
+        insertFin.month = this.time.splice(5,6)
+        insertFin.time = this.time
         insertFin.reason = this.reason
         insertFin.amount = parseFloat(this.money)
         console.log(insertFin)
