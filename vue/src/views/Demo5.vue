@@ -95,10 +95,6 @@ export default {
     }
   },
   created() {
-    // let user = JSON.parse(localStorage.getItem('user'));
-    // if(!user) {
-    //   this.$router.push('/login');
-    // }
     this.getFinance()
   },
   methods: {
@@ -122,8 +118,10 @@ export default {
         insertFin.id = this.result.id
         insertFin.totalAmount = parseFloat(this.allAmount) + parseFloat(this.money)
         insertFin.amountType = "1"
-        insertFin.year = this.time.splice(0,3)
-        insertFin.month = this.time.splice(5,6)
+        this.time = moment().format('YYYY-MM-DD HH:mm:ss')
+        console.log(this.time)
+        insertFin.year = this.time.substring(0,4)
+        insertFin.month = this.time.substring(5,7)
         insertFin.time = this.time
         insertFin.reason = this.reason
         insertFin.amount = parseFloat(this.money)
@@ -131,23 +129,6 @@ export default {
         this.$http.post("/finance/billing/insert", insertFin)
 
       }
-    },
-    spend() {
-        let date = new Date();
-        var insertFin = {}
-        insertFin.id = this.result.id
-        insertFin.totalAmount = parseFloat(this.allAmount) + parseFloat(this.money)
-        insertFin.amountType = "0"
-        insertFin.year = date.getFullYear() 
-        insertFin.month = date.getMonth() + 1
-        if (insertFin.month < 10) {
-          insertFin.month = '0' + insertFin.month
-        }
-        insertFin.time = moment().format('YYYY-MM-DD HH:mm:ss')
-        insertFin.reason = "测试阶段"
-        insertFin.amount = parseFloat(this.money)
-        console.log(insertFin)
-        this.$http.post("/finance/billing/insert", insertFin)
     },
     add () {
       this.number++;

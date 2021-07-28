@@ -34,6 +34,6 @@ public class FinanceQuery {
 
     private String reason;
 
-    private String tag;
+    private String tagName;
 
 }

@@ -14,6 +14,7 @@ import com.max.fallinlove.finance.entity.MonthAmountDetail;
 import com.max.fallinlove.finance.service.IAccountService;
 import com.max.fallinlove.finance.service.IMonthAmountDetailService;
 import com.max.fallinlove.finance.service.IMonthAmountService;
+import com.max.fallinlove.finance.service.ITagService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import java.math.BigDecimal;
@@ -49,6 +50,8 @@ public class FinanceController {
     IMonthAmountService monthAmountService;
     @Autowired
     IMonthAmountDetailService monthAmountDetailService;
+    @Autowired
+    ITagService tagService;
 
     @GetMapping("/test")
     public Result test() {
@@ -84,7 +87,7 @@ public class FinanceController {
     @Transactional
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @Operation(summary = "添加账单 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
-    public Result InsertMonthAmountDetail(@RequestBody FinanceQuery insertFinancel) {
+    public Result InsertMonthAmountDetail(@RequestHeader("id") int userId, @RequestBody FinanceQuery insertFinancel) {
 
 //        Jedis jedis = jedisPool.getResource();
 //        String clientID = UUID.randomUUID().toString();
@@ -115,7 +118,9 @@ public class FinanceController {
         monthAmountDetail.setAmountType(insertFinancel.getAmountType());
         monthAmountDetail.setTime(insertFinancel.getTime());
         monthAmountDetail.setReason(insertFinancel.getReason());
-        monthAmountDetail.setTag(insertFinancel.getTag());
+        monthAmountDetail.setTagName(insertFinancel.getTagName());
+        //tag表新增tag
+        tagService.updateByTagName(userId,insertFinancel.getTagName());
         monthAmountDetailService.save(monthAmountDetail);
 
         return ResultUtils.success();
@@ -181,5 +186,9 @@ public class FinanceController {
             Collectors.toList()));
 
         return monthAmountModel;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(System.getProperty("user.dir"));
     }
 }
