@@ -19,6 +19,14 @@
         <el-table-column label="收入" prop="income"></el-table-column>
         <el-table-column label="支出" prop="spend"></el-table-column>
       </el-table>
+          <div v-for="tag in tagList" :key="tag.id">
+            {{tag.tagName}}
+          </div>
+    <div style="margin-top: 20px">
+    <el-radio-group v-model="tag" size="small">
+        <el-radio-button  :label="tags.tagName" v-for="tags in tagList" :key="tags.id"></el-radio-button>
+    </el-radio-group>
+  </div>
     <el-date-picker
       v-model="time"
       type="date"
@@ -27,7 +35,7 @@
       value-format="yyyy-MM-dd">
     </el-date-picker>
       <el-input-number v-model="money" label="请输入金额" />
-    <el-input v-model="tag" placeholder="请输入标签" />
+    <el-input v-model="newTag" placeholder="请输入标签" />
     <el-input v-model="reason" placeholder="请输入备注" />
     <el-button type="success" round @click="income('1')">收入</el-button>
     <el-button type="danger" round @click="income('0')">支出</el-button>
@@ -76,9 +84,11 @@ export default {
       money: 0,
       allAmount: 0,
       monthList: [],
+      tagList: [],
       number: 1,
       reason: "",
       tag: "",
+      newTag: "",
       time: new Date(),
       isShow: true,
       Student: [
@@ -105,6 +115,8 @@ export default {
         this.result = response.data
         this.allAmount = this.result.totalAmount
         this.monthList = this.result.monthAmountModelList
+        console.log(this.result.tags)
+        this.tagList = this.result.tags
 
       })
     },
@@ -124,6 +136,12 @@ export default {
         insertFin.month = this.time.substring(5,7)
         insertFin.time = this.time
         insertFin.reason = this.reason
+        if(this.newTag != null) {
+        insertFin.tagName = this.newTag
+        } else {
+          insertFin.tagName = this.tag
+        }
+        insertFin.tagName = this.tag
         insertFin.amount = parseFloat(this.money)
         console.log(insertFin)
         this.$http.post("/finance/billing/insert", insertFin)

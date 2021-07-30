@@ -1,5 +1,6 @@
 package com.max.fallinlove.finance.service.impl;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.max.fallinlove.common.tools.RedisUtils;
@@ -9,7 +10,10 @@ import com.max.fallinlove.finance.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * <p>
@@ -38,5 +42,15 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
             tagMapper.insert(tag);
         }
         redisUtils.incrementScore(userId.toString(), tag.getId().toString(), 1.0);
+    }
+
+    @Override
+    public List<Tag> getTags(Integer userId) {
+        Set<String> set = redisUtils.rangeZset(userId.toString(),0, -1);
+        List<Tag> tags = new ArrayList<>();
+        if(CollectionUtils.isNotEmpty(set)) {
+            tags = tagMapper.selectBatchIds(set);
+        }
+        return tags;
     }
 }

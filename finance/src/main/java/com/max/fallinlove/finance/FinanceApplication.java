@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @SpringBootApplication
 @MapperScan("com.max.fallinlove.finance.mapper")
-@ComponentScan(basePackages = {"com.max.fallinlove.common"})
+@ComponentScan(basePackages = {"com.max.fallinlove.common","com.max.fallinlove.finance"})
 public class FinanceApplication {
 
     public static void main(String[] args) {

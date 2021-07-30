@@ -42,8 +42,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/billing")
 public class FinanceController {
 
-//    @Autowired
-//    JedisPool jedisPool;
     @Autowired
     IAccountService accountService;
     @Autowired
@@ -80,6 +78,8 @@ public class FinanceController {
         financeIndexModel.setId(account.getId());
         financeIndexModel.setTotalAmount(account.getTotalAmount());
         financeIndexModel.setMonthAmountModelList(monthAmountModelList);
+        //获取tag列表
+        financeIndexModel.setTags(tagService.getTags(userId));
 
         return ResultUtils.success(financeIndexModel);
     }

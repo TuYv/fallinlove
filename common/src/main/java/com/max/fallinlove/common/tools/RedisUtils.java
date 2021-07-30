@@ -1,7 +1,14 @@
 package com.max.fallinlove.common.tools;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -11,10 +18,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@Slf4j
 public class RedisUtils<V> {
     @Autowired
     private RedisTemplate redisTemplate;
-
 
     //- - - - - - - - - - - - - - - - - - - - -  公共方法 - - - - - - - - - - - - - - - - - - - -
 
@@ -543,5 +550,22 @@ public class RedisUtils<V> {
     public void incrementScore(String key, String value, Double score ) {
         redisTemplate.opsForZSet().incrementScore(key, value, score);
     }
+
+    /**
+     *  key存在，返回集合的对应位置的元素，区间左开右闭。start从0开始，end传-1表示查询所有。
+     * @param key
+     * @param start
+     * @param end
+     * @return
+     */
+    public Set<Object> rangeZset(String key, long start, long end) {
+        try {
+            return redisTemplate.opsForZSet().range(key, start, end);
+        } catch (Exception e) {
+            log.error("[RedisUtils.rangeZset] [error] [key is {},start is {},end is {}]", key, start, end, e);
+            return null;
+        }
+    }
+
 
 }
