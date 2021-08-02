@@ -136,12 +136,13 @@ export default {
         insertFin.month = this.time.substring(5,7)
         insertFin.time = this.time
         insertFin.reason = this.reason
-        if(this.newTag != null) {
+        if(this.newTag != '') {
+          console.log('newTag = ' + this.newTag)
         insertFin.tagName = this.newTag
         } else {
+          console.log('tag = ' + this.tag)
           insertFin.tagName = this.tag
         }
-        insertFin.tagName = this.tag
         insertFin.amount = parseFloat(this.money)
         console.log(insertFin)
         this.$http.post("/finance/billing/insert", insertFin)
