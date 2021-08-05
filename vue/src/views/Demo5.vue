@@ -125,16 +125,15 @@ export default {
       if (this.money === 0){
         alert("请输入正确的金额!!!")
       } else {
-        let date = new Date();
         var insertFin = {}
         insertFin.id = this.result.id
         insertFin.totalAmount = parseFloat(this.allAmount) + parseFloat(this.money)
-        insertFin.amountType = "1"
-        this.time = moment().format('YYYY-MM-DD HH:mm:ss')
-        console.log(this.time)
+        insertFin.amountType = type
+        this.time = moment(this.time).format('YYYY-MM-DD HH:mm:ss')
         insertFin.year = this.time.substring(0,4)
         insertFin.month = this.time.substring(5,7)
         insertFin.time = this.time
+          console.log('time = ' + this.time)
         insertFin.reason = this.reason
         if(this.newTag != '') {
           console.log('newTag = ' + this.newTag)
