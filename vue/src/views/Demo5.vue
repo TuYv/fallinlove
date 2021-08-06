@@ -19,9 +19,6 @@
         <el-table-column label="收入" prop="income"></el-table-column>
         <el-table-column label="支出" prop="spend"></el-table-column>
       </el-table>
-          <div v-for="tag in tagList" :key="tag.id">
-            {{tag.tagName}}
-          </div>
     <div style="margin-top: 20px">
     <el-radio-group v-model="tag" size="small">
         <el-radio-button  :label="tags.tagName" v-for="tags in tagList" :key="tags.id"></el-radio-button>
