@@ -20,8 +20,8 @@
         <el-table-column label="支出" prop="spend"></el-table-column>
       </el-table>
     <div style="margin-top: 20px">
-    <el-radio-group v-model="tag" size="small">
-        <el-radio-button  :label="tags.tagName" v-for="tags in tagList" :key="tags.id"></el-radio-button>
+    <el-radio-group v-model="tag" size="small" @change="changeTag()">
+        <el-radio-button  :label="tags.tagName" v-for="tags in tagList" :key="tags.id" ></el-radio-button>
     </el-radio-group>
   </div>
     <el-date-picker
@@ -32,7 +32,7 @@
       value-format="yyyy-MM-dd">
     </el-date-picker>
       <el-input-number v-model="money" label="请输入金额" />
-    <el-input v-model="newTag" placeholder="请输入标签" />
+    <el-input v-model="newTag" placeholder="请输入标签" @blur="changeNewTag()" />
     <el-input v-model="reason" placeholder="请输入备注" />
     <el-button type="success" round @click="income('1')">收入</el-button>
     <el-button type="danger" round @click="income('0')">支出</el-button>
@@ -105,6 +105,13 @@ export default {
     this.getFinance()
   },
   methods: {
+    changeNewTag() {
+      this.tag = ''
+    },
+    changeTag() {
+      console.log("进入changeTag方法")
+      this.newTag = ''
+    },
     getFinance() {
      let localUser = JSON.parse(localStorage.getItem('user'));
       this.$http.get("/finance/billing/" + localUser.accountId).then(response => {
