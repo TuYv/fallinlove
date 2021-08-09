@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-const Demo1 = () => import('../views/Demo1.vue')
+const Note = () => import('../views/Note.vue')
 const Demo2 = () => import('../views/Demo2.vue')
 const Demo3 = () => import('../views/Demo3.vue')
 const Demo4 = () => import('../views/Demo4.vue')
@@ -14,6 +14,7 @@ const Demo10 = () => import('../views/Demo10.vue')
 const Demo11 = () => import('../views/Demo11.vue')
 const Login = () => import('../components/Login.vue')
 const Register = () => import('../components/Register.vue')
+const Finance = () => import('../views/Finance.vue')
 
 Vue.use(VueRouter)
 
@@ -32,9 +33,9 @@ const routes = [
         component: () => import( '../views/About.vue')
       },
       {
-        path: '/demo1',
-        name: 'Demo1',
-        component: Demo1
+        path: '/note',
+        name: 'Note',
+        component: Note
       },
       {
         path: '/demo2',
@@ -52,7 +53,7 @@ const routes = [
         component: Demo4
       },
       {
-        path: '/',
+        path: '/demo5',
         name: 'Demo5',
         component: Demo5
       },
@@ -85,6 +86,11 @@ const routes = [
         path: '/demo11',
         name: 'Demo11',
         component: Demo11
+      },
+      {
+        path: '/',
+        name: 'Finance',
+        component: Finance
       }
     ]
   },

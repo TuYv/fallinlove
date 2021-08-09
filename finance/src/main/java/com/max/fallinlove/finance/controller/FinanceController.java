@@ -18,6 +18,7 @@ import com.max.fallinlove.finance.service.ITagService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -189,6 +190,6 @@ public class FinanceController {
     }
 
     public static void main(String[] args) {
-        System.out.println(System.getProperty("user.dir"));
+        System.out.println(LocalDateTime.now());
     }
 }

@@ -27,7 +27,7 @@
 </template>
 <script>
 export default {
-  name: "demo1",
+  name: "note",
   data() {
     return {
       msg: "demo1",
