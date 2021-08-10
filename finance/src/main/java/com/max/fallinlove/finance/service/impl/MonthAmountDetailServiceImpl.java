@@ -2,9 +2,13 @@ package com.max.fallinlove.finance.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.max.fallinlove.finance.entity.MonthAmount;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
 import com.max.fallinlove.finance.mapper.MonthAmountDetailMapper;
+import com.max.fallinlove.finance.mapper.MonthAmountMapper;
 import com.max.fallinlove.finance.service.IMonthAmountDetailService;
+
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,8 @@ import org.springframework.stereotype.Service;
 public class MonthAmountDetailServiceImpl extends ServiceImpl<MonthAmountDetailMapper, MonthAmountDetail> implements IMonthAmountDetailService {
 
     @Autowired
+    private MonthAmountMapper monthAmountMapper;
+    @Autowired
     private MonthAmountDetailMapper monthAmountDetailMapper;
 
     @Override
@@ -28,5 +34,26 @@ public class MonthAmountDetailServiceImpl extends ServiceImpl<MonthAmountDetailM
         QueryWrapper<MonthAmountDetail> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("month_amount_id",monthAmountId);
         return this.monthAmountDetailMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<MonthAmountDetail> getMonthTagAmountList() {
+        //获取当前月的总记录
+        int month = LocalDate.now().getMonthValue();
+        String m = month < 10 ? "0" + month : String.valueOf(month);
+        String y = String.valueOf(LocalDate.now().getYear());
+        QueryWrapper<MonthAmount> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("year", y);
+        queryWrapper.eq("month",m);
+        MonthAmount monthAmount = monthAmountMapper.selectOne(queryWrapper);
+
+        //获取tag记录
+        List<MonthAmountDetail> list = monthAmountDetailMapper.queryMonthTagAmount("0", monthAmount.getId());
+        return list;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(LocalDate.now().getYear());
+
     }
 }

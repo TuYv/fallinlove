@@ -48,6 +48,8 @@
         <el-input v-model="reason" placeholder="请输入备注" />
         <el-button type="success" round @click="income('1')">收入</el-button>
         <el-button type="danger" round @click="income('0')">支出</el-button>
+
+        <div style="width: 500px; height: 500px" ref="charts"></div>
       </el-main>
     </el-container>
   </div>
@@ -55,6 +57,7 @@
 
 <script>
 import moment from "moment";
+const echarts = require("echarts");
 export default {
   name: "finance",
   data() {
@@ -64,18 +67,68 @@ export default {
       allAmount: 0,
       monthList: [],
       tagList: [],
-      number: 1,
       reason: "",
       tag: "",
       newTag: "",
       time: new Date(),
-      isShow: true,
     };
   },
   created() {
     this.getFinance();
+    this.getTagAmount();
   },
   methods: {
+    getTagAmount() {
+      this.$http.get("/finance/billing/monthTag").then((response) => {
+        let array = [];
+        response.data.forEach((item) => {
+          array.push({
+            name: item.tagName,
+            value: item.amount,
+          });
+        });
+        console.log("转换后", array);
+        let myChart = echarts.init(this.$refs.charts);
+        // 绘制图表
+        myChart.setOption({
+          tooltip: {
+            trigger: "item",
+          },
+          legend: {
+            top: "5%",
+            left: "center",
+          },
+          series: [
+            {
+              name: "花费",
+              type: "pie",
+              radius: ["40%", "70%"],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: "#fff",
+                borderWidth: 2,
+              },
+              label: {
+                show: false,
+                position: "center",
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: "40",
+                  fontWeight: "bold",
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: array,
+            },
+          ],
+        });
+      });
+    },
     changeNewTag() {
       this.tag = "";
     },

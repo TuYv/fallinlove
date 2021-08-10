@@ -14,4 +14,10 @@ import java.util.List;
  */
 public interface IMonthAmountDetailService extends IService<MonthAmountDetail> {
     List<MonthAmountDetail> getMonthAmountDetailList(int monthAmountId);
+
+    /**
+     * 获取当前月的tag费用
+     * @return
+     */
+    List<MonthAmountDetail> getMonthTagAmountList();
 }

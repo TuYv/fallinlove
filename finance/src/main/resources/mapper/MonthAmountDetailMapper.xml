@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.max.fallinlove.finance.mapper.MonthAmountDetailMapper">
 
+    <select id="queryMonthTagAmount" resultType="com.max.fallinlove.finance.entity.MonthAmountDetail">
+        select tag_name, sum(amount) as amount from month_amount_detail where amount_type = #{amountType} and month_amount_id = #{monthAmountId} group by tag_name;
+    </select>
 </mapper>

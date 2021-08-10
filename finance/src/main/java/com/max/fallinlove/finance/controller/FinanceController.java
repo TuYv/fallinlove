@@ -11,6 +11,7 @@ import com.max.fallinlove.finance.dto.MonthAmountDTO;
 import com.max.fallinlove.finance.entity.Account;
 import com.max.fallinlove.finance.entity.MonthAmount;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
+import com.max.fallinlove.finance.mapper.MonthAmountDetailMapper;
 import com.max.fallinlove.finance.service.IAccountService;
 import com.max.fallinlove.finance.service.IMonthAmountDetailService;
 import com.max.fallinlove.finance.service.IMonthAmountService;
@@ -126,6 +127,14 @@ public class FinanceController {
 
         return ResultUtils.success();
     }
+
+    @RequestMapping(value = "/monthTag", method = RequestMethod.GET)
+    @Operation(summary = "当月tag费用 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
+    public Result MonthTagAmount() {
+        List<MonthAmountDetail> list = monthAmountDetailService.getMonthTagAmountList();
+        return ResultUtils.success(list);
+    }
+
 /*
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public Result testAmount() {

@@ -2,6 +2,9 @@ package com.max.fallinlove.finance.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.max.fallinlove.finance.entity.MonthAmountDetail;
  */
 public interface MonthAmountDetailMapper extends BaseMapper<MonthAmountDetail> {
 
+    List<MonthAmountDetail> queryMonthTagAmount(@Param("amountType")String amountType, @Param("monthAmountId") Integer monthAmountId);
 }
