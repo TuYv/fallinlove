@@ -49,6 +49,7 @@
         <el-button type="success" round @click="income('1')">收入</el-button>
         <el-button type="danger" round @click="income('0')">支出</el-button>
 
+        <div style="width: 500px; height: 500px" ref="monthAmount"></div>
         <div style="width: 500px; height: 500px" ref="charts"></div>
       </el-main>
     </el-container>
@@ -127,6 +128,10 @@ export default {
             },
           ],
         });
+        myChart.on('click', function (params) {
+    // 控制台打印数据的名称
+    console.log(params.name);
+    });
       });
     },
     changeNewTag() {
@@ -146,6 +151,66 @@ export default {
           this.monthList = this.result.monthAmountModelList;
           console.log(this.result.tags);
           this.tagList = this.result.tags;
+
+          let monthArray = [];
+          let incomeArray = [];
+          let outArray = [];
+          let lastArray = [];
+          console.log("收支表log", this.monthList);
+          this.monthList.forEach((item) => {
+            monthArray.push(item.time);
+            incomeArray.push(item.income);
+            outArray.push(item.spend);
+            lastArray.push((item.income - item.spend).toFixed(2));
+          });
+          let monthAmount = echarts.init(this.$refs.monthAmount);
+          monthAmount.setOption({
+            title: {
+              text: "收支图",
+            },
+            tooltip: {
+              trigger: "axis",
+            },
+            legend: {
+              data: ["收入", "支出", "盈余"],
+            },
+            grid: {
+              left: "3%",
+              right: "4%",
+              bottom: "3%",
+              containLabel: true,
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+              },
+            },
+            xAxis: {
+              type: "category",
+              boundaryGap: false,
+              data: monthArray,
+            },
+            yAxis: {
+              type: "value",
+            },
+            series: [
+              {
+                name: "收入",
+                type: "line",
+                data: incomeArray,
+              },
+              {
+                name: "支出",
+                type: "line",
+                data: outArray,
+              },
+              {
+                name: "盈余",
+                type: "line",
+                data: lastArray,
+              },
+            ],
+          });
         });
     },
 
