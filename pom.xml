@@ -34,10 +34,10 @@
     <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
     <mybatis-plus-generator.version>3.4.0</mybatis-plus-generator.version>
-    <velocity-engine-core.version>2.2</velocity-engine-core.version>
+    <velocity-engine-core.version>2.3</velocity-engine-core.version>
     <freemarker.version>2.3.28</freemarker.version>
     <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
-    <fastjson.version>1.2.47</fastjson.version>
+    <fastjson.version>1.2.79</fastjson.version>
     <hutool-all.version>5.4.0</hutool-all.version>
     <nacos.version>2.2.5.RELEASE</nacos.version>
     <gateway.version>2.2.5.RELEASE</gateway.version>
