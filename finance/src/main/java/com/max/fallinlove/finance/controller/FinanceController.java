@@ -1,6 +1,5 @@
 package com.max.fallinlove.finance.controller;
 
-import static com.max.fallinlove.base.constants.RedisConstants.FIN_DISTRIBUTED_LOCK;
 
 import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
