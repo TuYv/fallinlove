@@ -40,6 +40,7 @@ public class MonthAmountDetailServiceImpl extends ServiceImpl<MonthAmountDetailM
         monthAmountDetail.setTime(insertFinance.getTime());
         monthAmountDetail.setReason(insertFinance.getReason());
         monthAmountDetail.setTagName(insertFinance.getTagName());
+        monthAmountDetail.setMonthPlanId(insertFinance.getMonthPlanId());
 
         this.save(monthAmountDetail);
     }

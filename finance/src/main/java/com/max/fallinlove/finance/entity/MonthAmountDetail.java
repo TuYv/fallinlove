@@ -37,5 +37,6 @@ public class MonthAmountDetail implements Serializable {
 
     private String tagName;
 
+    private Integer monthPlanId;
 
 }

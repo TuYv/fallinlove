@@ -35,5 +35,8 @@ public class FinanceQuery {
     private String reason;
 
     private String tagName;
-
+    /**
+     * 预算种类Id
+     */
+    private int monthPlanId;
 }

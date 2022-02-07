@@ -41,7 +41,10 @@ public class Plan implements Serializable {
      */
     private BigDecimal saved;
 
-    private BigDecimal purpoes;
+    /**
+     * 目标
+     */
+    private BigDecimal purposes;
 
 
 }
