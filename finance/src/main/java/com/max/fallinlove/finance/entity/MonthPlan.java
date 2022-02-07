@@ -8,9 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
  * 月度预算
- * </p>
  *
  * @author max.tu
  * @since 2022-02-07
@@ -25,16 +23,12 @@ public class MonthPlan implements Serializable {
     private Integer id;
 
     private Integer userId;
-
     /**
-     * 预算名
+     * 预算类型
      */
-    private String planName;
-
+    private String planType;
     /**
      * 预算金额
      */
     private BigDecimal planAmount;
-
-
 }

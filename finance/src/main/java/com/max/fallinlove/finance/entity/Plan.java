@@ -8,10 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <p>
  * 计划表
- * </p>
- *
  * @author max.tu
  * @since 2022-02-07
  */
@@ -25,22 +22,18 @@ public class Plan implements Serializable {
     private Integer id;
 
     private Integer userId;
-
     /**
      * 计划Id
      */
     private Integer planId;
-
     /**
      * 计划名称
      */
     private String planName;
-
     /**
      * 已存
      */
     private BigDecimal saved;
-
     /**
      * 目标
      */

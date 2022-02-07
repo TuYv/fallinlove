@@ -67,9 +67,4 @@ public class MonthAmountDetailServiceImpl extends ServiceImpl<MonthAmountDetailM
         List<MonthAmountDetail> list = monthAmountDetailMapper.queryMonthTagAmount("0", monthAmount.getId());
         return list;
     }
-
-    public static void main(String[] args) {
-        System.out.println(LocalDate.now().getYear());
-
-    }
 }
