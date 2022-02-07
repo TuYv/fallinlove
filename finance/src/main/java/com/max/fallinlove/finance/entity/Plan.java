@@ -25,7 +25,7 @@ public class Plan implements Serializable {
     /**
      * 计划Id
      */
-    private Integer planId;
+    private String planId;
     /**
      * 计划名称
      */

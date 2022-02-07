@@ -3,8 +3,7 @@ package com.max.fallinlove.finance.controller;
 
 import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
-import com.max.fallinlove.base.constants.FinanceConstants;
-import com.max.fallinlove.finance.cqe.FinanceQuery;
+import com.max.fallinlove.finance.req.FinanceReq;
 import com.max.fallinlove.finance.dto.FinanceDTO;
 import com.max.fallinlove.finance.dto.MonthAmountDTO;
 import com.max.fallinlove.finance.entity.Account;
@@ -19,7 +18,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -82,7 +80,7 @@ public class FinanceController {
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @Operation(summary = "添加账单 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
-    public Result InsertMonthAmountDetail(@RequestHeader("id") int userId, @RequestBody FinanceQuery insertFinance) {
+    public Result InsertMonthAmountDetail(@RequestHeader("id") int userId, @RequestBody FinanceReq insertFinance) {
 
 //        Jedis jedis = jedisPool.getResource();
 //        String clientID = UUID.randomUUID().toString();

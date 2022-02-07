@@ -1,6 +1,6 @@
 package com.max.fallinlove.finance.service;
 
-import com.max.fallinlove.finance.cqe.FinanceQuery;
+import com.max.fallinlove.finance.req.FinanceReq;
 
 /**
  * 记账服务
@@ -16,5 +16,5 @@ public interface IBillingService {
      * @param insertFinance
      * @return
      */
-    Boolean insertMonthAmountDetail(int userId, FinanceQuery insertFinance);
+    Boolean insertMonthAmountDetail(int userId, FinanceReq insertFinance);
 }

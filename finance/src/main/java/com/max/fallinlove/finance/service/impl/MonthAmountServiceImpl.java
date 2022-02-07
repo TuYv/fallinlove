@@ -2,7 +2,6 @@ package com.max.fallinlove.finance.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.max.fallinlove.finance.cqe.FinanceQuery;
 import com.max.fallinlove.finance.entity.MonthAmount;
 import com.max.fallinlove.finance.mapper.MonthAmountMapper;
 import com.max.fallinlove.finance.repository.MonthAmountRepository;
@@ -12,7 +11,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

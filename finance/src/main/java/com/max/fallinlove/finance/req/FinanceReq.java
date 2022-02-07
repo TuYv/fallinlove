@@ -1,4 +1,4 @@
-package com.max.fallinlove.finance.cqe;
+package com.max.fallinlove.finance.req;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @create: 2019-09-04 20:57
  **/
 @Data
-public class FinanceQuery {
+public class FinanceReq {
 
     private int id;
 

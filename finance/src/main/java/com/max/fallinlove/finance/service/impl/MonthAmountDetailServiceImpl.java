@@ -2,7 +2,7 @@ package com.max.fallinlove.finance.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.max.fallinlove.finance.cqe.FinanceQuery;
+import com.max.fallinlove.finance.req.FinanceReq;
 import com.max.fallinlove.finance.entity.MonthAmount;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
 import com.max.fallinlove.finance.mapper.MonthAmountDetailMapper;
@@ -11,7 +11,6 @@ import com.max.fallinlove.finance.service.IMonthAmountDetailService;
 
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,7 +31,7 @@ public class MonthAmountDetailServiceImpl extends ServiceImpl<MonthAmountDetailM
     @Resource
     private MonthAmountDetailMapper monthAmountDetailMapper;
 
-    @Override public void saveMonthAmountDetail(int id, FinanceQuery insertFinance) {
+    @Override public void saveMonthAmountDetail(int id, FinanceReq insertFinance) {
         MonthAmountDetail monthAmountDetail = new MonthAmountDetail();
         monthAmountDetail.setMonthAmountId(id);
         monthAmountDetail.setAmount(insertFinance.getAmount());

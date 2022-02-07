@@ -1,9 +1,8 @@
 package com.max.fallinlove.finance.service.impl;
 
 import com.max.fallinlove.base.constants.FinanceConstants;
-import com.max.fallinlove.finance.cqe.FinanceQuery;
+import com.max.fallinlove.finance.req.FinanceReq;
 import com.max.fallinlove.finance.entity.MonthAmount;
-import com.max.fallinlove.finance.entity.MonthAmountDetail;
 import com.max.fallinlove.finance.service.IBillingService;
 import com.max.fallinlove.finance.service.IMonthAmountDetailService;
 import com.max.fallinlove.finance.service.IMonthAmountService;
@@ -32,7 +31,7 @@ public class BillingServiceImpl implements IBillingService {
      */
     @Override
     @Transactional
-    public Boolean insertMonthAmountDetail(int userId, FinanceQuery insertFinance) {
+    public Boolean insertMonthAmountDetail(int userId, FinanceReq insertFinance) {
         //1. 更新月账单
         MonthAmount monthAmount = monthAmountService.getByTime(insertFinance.getId(), insertFinance.getYear(), insertFinance.getMonth());
 
