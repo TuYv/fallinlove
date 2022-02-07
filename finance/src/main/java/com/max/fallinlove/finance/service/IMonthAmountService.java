@@ -15,5 +15,12 @@ import java.util.List;
 public interface IMonthAmountService extends IService<MonthAmount> {
     List<MonthAmount> getAllMonthAmountByAccountId(int accountId);
 
-    MonthAmount getByTime(String year, String month);
+    /**
+     * 根据时间获取月消费信息
+     * @param id
+     * @param year
+     * @param month
+     * @return
+     */
+    MonthAmount getByTime(Integer id, String year, String month);
 }

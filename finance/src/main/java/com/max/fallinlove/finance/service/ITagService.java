@@ -21,5 +21,10 @@ public interface ITagService extends IService<Tag> {
      */
     void updateByTagName(Integer userId,String tagName);
 
+    /**
+     * 根据userID获取tag列表
+     * @param userId
+     * @return
+     */
     List<Tag> getTags(Integer userId);
 }

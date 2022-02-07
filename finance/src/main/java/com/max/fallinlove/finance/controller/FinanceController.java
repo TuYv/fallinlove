@@ -10,25 +10,19 @@ import com.max.fallinlove.finance.dto.MonthAmountDTO;
 import com.max.fallinlove.finance.entity.Account;
 import com.max.fallinlove.finance.entity.MonthAmount;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
-import com.max.fallinlove.finance.mapper.MonthAmountDetailMapper;
-import com.max.fallinlove.finance.service.IAccountService;
-import com.max.fallinlove.finance.service.IMonthAmountDetailService;
-import com.max.fallinlove.finance.service.IMonthAmountService;
-import com.max.fallinlove.finance.service.ITagService;
+import com.max.fallinlove.finance.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @program: fall-in-love
@@ -43,14 +37,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/billing")
 public class FinanceController {
 
-    @Autowired
+    @Resource
     IAccountService accountService;
-    @Autowired
+    @Resource
     IMonthAmountService monthAmountService;
-    @Autowired
+    @Resource
     IMonthAmountDetailService monthAmountDetailService;
-    @Autowired
+    @Resource
     ITagService tagService;
+    @Resource IBillingService billingService;
 
     @GetMapping("/test")
     public Result test() {
@@ -85,46 +80,20 @@ public class FinanceController {
         return ResultUtils.success(financeIndexModel);
     }
 
-    @Transactional
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @Operation(summary = "添加账单 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
-    public Result InsertMonthAmountDetail(@RequestHeader("id") int userId, @RequestBody FinanceQuery insertFinancel) {
+    public Result InsertMonthAmountDetail(@RequestHeader("id") int userId, @RequestBody FinanceQuery insertFinance) {
 
 //        Jedis jedis = jedisPool.getResource();
 //        String clientID = UUID.randomUUID().toString();
 //        jedis.set(FIN_DISTRIBUTED_LOCK,clientID, SetParams.setParams().nx().ex(1800));
         //1.更新账户表
         //Account account = new Account();
-        //account.setId(insertFinancel.getId());
-        //account.setTotalAmount(insertFinancel.getTotalAmount());
+        //account.setId(insertFinance.getId());
+        //account.setTotalAmount(insertFinance.getTotalAmount());
         //accountService.saveOrUpdate(account);
-
-        //2. 获取月账单 如果没有就设置默认
-        MonthAmount monthAmount = monthAmountService.getByTime(insertFinancel.getYear(), insertFinancel.getMonth());
-        if (Objects.isNull(monthAmount)) {
-            //todo 可以设置成月初自动生成当月账单
-            monthAmount = defaultMonthAmount(insertFinancel);
-        }
-        if (insertFinancel.getAmountType().equals(FinanceConstants.AMOUNT_TYPE_INCOME)) {
-            monthAmount.setIncome(monthAmount.getIncome().add(insertFinancel.getAmount()));
-        } else {
-            monthAmount.setSpend(monthAmount.getSpend().add(insertFinancel.getAmount()));
-        }
-        monthAmountService.saveOrUpdate(monthAmount);
-
-        //3. 新增本次账单记录
-        MonthAmountDetail monthAmountDetail = new MonthAmountDetail();
-        monthAmountDetail.setMonthAmountId(monthAmount.getId());
-        monthAmountDetail.setAmount(insertFinancel.getAmount());
-        monthAmountDetail.setAmountType(insertFinancel.getAmountType());
-        monthAmountDetail.setTime(insertFinancel.getTime());
-        monthAmountDetail.setReason(insertFinancel.getReason());
-        monthAmountDetail.setTagName(insertFinancel.getTagName());
-        //tag表新增tag
-        tagService.updateByTagName(userId,insertFinancel.getTagName());
-        monthAmountDetailService.save(monthAmountDetail);
-
-        return ResultUtils.success();
+        Boolean result = billingService.insertMonthAmountDetail(userId, insertFinance);
+        return result ? ResultUtils.success() : ResultUtils.fail("0000","新增失败，请重试！");
     }
 
     @RequestMapping(value = "/monthTag", method = RequestMethod.GET)
@@ -161,21 +130,7 @@ public class FinanceController {
 
         return ResultUtils.success();
     }*/
-    /**
-     * 设置默认月账单
-     * @param insertFinancel
-     * @return
-     */
-    private MonthAmount defaultMonthAmount(FinanceQuery insertFinancel) {
-        MonthAmount monthAmount = new MonthAmount();
-        monthAmount.setMonth(insertFinancel.getMonth());
-        monthAmount.setAccountId(insertFinancel.getId());
-        monthAmount.setYear(insertFinancel.getYear());
-        monthAmount.setSpend(BigDecimal.ZERO);
-        monthAmount.setIncome(BigDecimal.ZERO);
 
-        return monthAmount;
-    }
 
     /**
      * 设置月日账单
@@ -195,9 +150,5 @@ public class FinanceController {
             Collectors.toList()));
 
         return monthAmountModel;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(LocalDateTime.now());
     }
 }

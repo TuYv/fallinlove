@@ -1,6 +1,7 @@
 package com.max.fallinlove.finance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.max.fallinlove.finance.cqe.FinanceQuery;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
 import java.util.List;
 
@@ -13,6 +14,9 @@ import java.util.List;
  * @since 2021-03-23
  */
 public interface IMonthAmountDetailService extends IService<MonthAmountDetail> {
+
+    void saveMonthAmountDetail(int id, FinanceQuery insertFinance);
+
     List<MonthAmountDetail> getMonthAmountDetailList(int monthAmountId);
 
     /**
