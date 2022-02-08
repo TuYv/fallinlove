@@ -2,6 +2,7 @@ package com.max.fallinlove.finance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.max.fallinlove.finance.entity.MonthPlan;
+import com.max.fallinlove.finance.req.MonthPlanReq;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.max.fallinlove.finance.entity.MonthPlan;
  */
 public interface IMonthPlanService extends IService<MonthPlan> {
 
+    void saveMonthPlan(MonthPlanReq req);
 }

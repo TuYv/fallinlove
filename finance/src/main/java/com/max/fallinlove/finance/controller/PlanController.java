@@ -2,14 +2,21 @@ package com.max.fallinlove.finance.controller;
 
 import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
+import com.max.fallinlove.finance.req.JoinPlanReq;
+import com.max.fallinlove.finance.req.MonthPlanReq;
 import com.max.fallinlove.finance.req.PlanReq;
+import com.max.fallinlove.finance.service.IMonthPlanService;
+import com.max.fallinlove.finance.service.IPlanService;
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * 预算接口
@@ -24,6 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/plan")
 public class PlanController {
 
+    @Resource private IPlanService planService;
+    @Resource private IMonthPlanService monthPlanService;
+
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public Result test() {
         log.info("now in test function");
@@ -31,7 +41,23 @@ public class PlanController {
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @Operation(summary = "新增计划 - 【涂瑜】", tags = {"【预算 模块】预算相关 - 【涂瑜】", "涂瑜"})
     public Result insert(@RequestBody PlanReq planReq) {
+        planService.savePlan(planReq);
+        return ResultUtils.success();
+    }
 
+    @RequestMapping(value = "/join", method = RequestMethod.POST)
+    @Operation(summary = "加入计划 - 【涂瑜】", tags = {"【预算 模块】预算相关 - 【涂瑜】", "涂瑜"})
+    public Result join(@RequestBody JoinPlanReq joinPlanReq) {
+        planService.joinPlan(joinPlanReq);
+        return ResultUtils.success();
+    }
+
+    @RequestMapping(value = "/monthPlan/insert", method = RequestMethod.POST)
+    @Operation(summary = "新增预算 - 【涂瑜】", tags = {"【预算 模块】预算相关 - 【涂瑜】", "涂瑜"})
+    public Result monthPlanInsert(@RequestBody MonthPlanReq req) {
+        monthPlanService.saveMonthPlan(req);
+        return ResultUtils.success();
     }
 }

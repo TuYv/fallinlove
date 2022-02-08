@@ -2,6 +2,7 @@ package com.max.fallinlove.finance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.max.fallinlove.finance.entity.Plan;
+import com.max.fallinlove.finance.req.JoinPlanReq;
 import com.max.fallinlove.finance.req.PlanReq;
 
 /**
@@ -15,4 +16,6 @@ import com.max.fallinlove.finance.req.PlanReq;
 public interface IPlanService extends IService<Plan> {
 
     void savePlan(PlanReq planReq);
+
+    void joinPlan(JoinPlanReq joinPlanReq);
 }
