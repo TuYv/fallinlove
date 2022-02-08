@@ -13,7 +13,7 @@ public class JoinPlanReq {
     /**
      * 加入者Id
      */
-    private int userId;
+    private int accountId;
     /**
      * 加入的计划Id
      */

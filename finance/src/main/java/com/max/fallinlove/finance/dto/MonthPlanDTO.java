@@ -1,21 +1,15 @@
-package com.max.fallinlove.finance.req;
+package com.max.fallinlove.finance.dto;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 /**
- * 预算req
- *
  * @author Rick
- * @date 2022-02-08 11:36
+ * @date 2022-02-08 20:19
  */
 @Data
-public class MonthPlanReq {
-
-    private int accountId;
-
+public class MonthPlanDTO {
     private String planType;
-
     private BigDecimal planAmount;
 }

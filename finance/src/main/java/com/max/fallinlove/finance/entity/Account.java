@@ -22,5 +22,5 @@ public class Account implements Serializable {
 
     private BigDecimal totalAmount;
 
-
+    private String nickName;
 }

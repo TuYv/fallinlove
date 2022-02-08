@@ -12,9 +12,9 @@ public interface IBillingService {
 
     /**
      * 新增一笔记账
-     * @param userId
+     * @param accountId
      * @param insertFinance
      * @return
      */
-    Boolean insertMonthAmountDetail(int userId, FinanceReq insertFinance);
+    Boolean insertMonthAmountDetail(int accountId, FinanceReq insertFinance);
 }

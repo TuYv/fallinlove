@@ -11,7 +11,7 @@ import lombok.Data;
  **/
 @Data
 public class PlanReq {
-    private int userId;
+    private int accountId;
 
     private String planName;
 

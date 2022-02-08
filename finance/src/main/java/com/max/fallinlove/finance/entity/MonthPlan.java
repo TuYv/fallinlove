@@ -22,7 +22,7 @@ public class MonthPlan implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private Integer userId;
+    private Integer accountId;
     /**
      * 预算类型
      */

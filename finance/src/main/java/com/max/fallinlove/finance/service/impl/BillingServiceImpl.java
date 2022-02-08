@@ -25,13 +25,13 @@ public class BillingServiceImpl implements IBillingService {
 
     /**
      * 新增记账
-     * @param userId
+     * @param accountId
      * @param insertFinance
      * @return
      */
     @Override
     @Transactional
-    public Boolean insertMonthAmountDetail(int userId, FinanceReq insertFinance) {
+    public Boolean insertMonthAmountDetail(int accountId, FinanceReq insertFinance) {
         //1. 更新月账单
         MonthAmount monthAmount = monthAmountService.getByTime(insertFinance.getId(), insertFinance.getYear(), insertFinance.getMonth());
 
@@ -45,7 +45,7 @@ public class BillingServiceImpl implements IBillingService {
         //2. 新增本次账单记录
         monthAmountDetailService.saveMonthAmountDetail(monthAmount.getId(), insertFinance);
         //3. tag表新增tag
-        tagService.updateByTagName(userId,insertFinance.getTagName());
+        tagService.updateByTagName(accountId,insertFinance.getTagName());
 
         return true;
     }

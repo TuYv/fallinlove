@@ -2,6 +2,8 @@ package com.max.fallinlove.finance.controller;
 
 import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
+import com.max.fallinlove.finance.dto.MonthPlanDTO;
+import com.max.fallinlove.finance.dto.PlanDTO;
 import com.max.fallinlove.finance.req.JoinPlanReq;
 import com.max.fallinlove.finance.req.MonthPlanReq;
 import com.max.fallinlove.finance.req.PlanReq;
@@ -10,13 +12,10 @@ import com.max.fallinlove.finance.service.IPlanService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 预算接口
@@ -54,10 +53,24 @@ public class PlanController {
         return ResultUtils.success();
     }
 
+    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    @Operation(summary = "查询计划 - 【涂瑜】", tags = {"【预算 模块】预算相关 - 【涂瑜】", "涂瑜"})
+    public Result<List<PlanDTO>> query(@RequestParam(value = "accountId") Integer accountId) {
+        List<PlanDTO> result = planService.queryPlanList(accountId);
+        return ResultUtils.success(result);
+    }
+
     @RequestMapping(value = "/monthPlan/insert", method = RequestMethod.POST)
     @Operation(summary = "新增预算 - 【涂瑜】", tags = {"【预算 模块】预算相关 - 【涂瑜】", "涂瑜"})
     public Result monthPlanInsert(@RequestBody MonthPlanReq req) {
         monthPlanService.saveMonthPlan(req);
         return ResultUtils.success();
+    }
+
+    @RequestMapping(value = "/monthPlan/query", method = RequestMethod.GET)
+    @Operation(summary = "查询预算 - 【涂瑜】", tags = {"【预算 模块】预算相关 - 【涂瑜】", "涂瑜"})
+    public Result<List<MonthPlanDTO>> monthPlanQuery(@RequestParam(value = "accountId") Integer accountId) {
+        final List<MonthPlanDTO> result = monthPlanService.queryMonthPlan(accountId);
+        return ResultUtils.success(result);
     }
 }
