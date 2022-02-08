@@ -47,6 +47,11 @@
       <artifactId>mybatis-plus-generator</artifactId>
       <version>${mybatis-plus-generator.version}</version>
     </dependency>
+    <!-- Spring Boot Web 依赖 核心 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
     <!--mysql 自动生成需要这个包-->
     <dependency>
       <groupId>mysql</groupId>
