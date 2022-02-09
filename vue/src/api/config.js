@@ -2,8 +2,8 @@ import axios from 'axios'
 
 //创建一个axios实例
 const service = axios.create({
-    baseURL: 'http://101.34.27.48/api',
-    withCredentials: true,
+    //baseURL: 'http://101.34.27.48/api',
+    baseURL: 'http://localhost:8083',
     // 请求超时时间
     timeout: 60000
 })

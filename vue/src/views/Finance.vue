@@ -2,6 +2,29 @@
   <div>
     <el-container>
       <el-header>记账 Demo</el-header>
+      <base-progress
+      :count="100"
+      :value="50"
+      />
+      <div v-if="planList.length > 0"> 
+      <el-alert>目标 {{planList[0].purposes}} </el-alert>
+      <div v-for="(plan,index) in planList"
+      :key="index">
+      {{plan.nickName}} : {{plan.planName}} :: {{plan.saved}}
+      </div>
+      </div>
+      <el-input v-model="planName" placeholder="请输入计划名" />
+      <el-input-number v-model="purposes" placeholder="请输入目标金额" />
+      <el-button type="primary" icon="el-icon-edit" @click="insertPlan()" >新增计划 </el-button>
+      <div v-if="monthPlanList.length > 0"> 
+      <div v-for="(monthPlan,index) in monthPlanList"
+      :key="index">
+      {{monthPlan.planType}} :: {{monthPlan.planAmount}}
+      </div>
+      </div>
+      <el-input v-model="monthPlanType" placeholder="请输入预算类型" />
+      <el-input-number v-model="monthPlanAmount" placeholder="请输入预算金额" />
+      <el-button type="primary" icon="el-icon-edit" @click="insertMonthPlan()">新增预算 </el-button>
       <el-main>
         <span>总金额：{{ allAmount }}</span>
         <el-table :data="monthList" style="width: 100%">
@@ -58,8 +81,10 @@
 
 <script>
 import moment from "moment";
+import baseProgress from '../components/base-progress.vue';
 const echarts = require("echarts");
 export default {
+  components: { baseProgress },
   name: "finance",
   data() {
     return {
@@ -68,19 +93,84 @@ export default {
       allAmount: 0,
       monthList: [],
       tagList: [],
+      planList: [],
+      monthPlanList: [],
       reason: "",
       tag: "",
       newTag: "",
+      planName: "",
+      purposes: 0,
+      monthPlanType: "",
+      monthPlanAmount: 0,
       time: new Date(),
     };
   },
   created() {
     this.getFinance();
     this.getTagAmount();
+    this.getPlan();
+    this.getMonthPlan();
   },
   methods: {
+    insertMonthPlan() {
+      let localUser = JSON.parse(localStorage.getItem("user"));
+      var newMonthPlan = {};
+      newMonthPlan.accountId = localUser.accountId;
+      newMonthPlan.planType = this.monthPlanType;
+      newMonthPlan.planAmount = this.monthPlanAmount;
+      this.$http
+          .post("/plan/monthPlan/insert", newMonthPlan)
+          .then((response) => {
+            this.newMonthPlan = {};
+            this.monthPlanType = "";
+            this.monthPlanAmount = 0;
+            this.getMonthPlan();
+          });
+    },
+    getMonthPlan() {
+      let localUser = JSON.parse(localStorage.getItem("user"));
+      this.$http.get("/plan/monthPlan/query",{
+        params: {
+          accountId: localUser.accountId
+        }
+      }).then((response) => {
+        console.log(response);
+        this.monthPlanList = response.data
+      })
+    },
+    insertPlan() {
+      let localUser = JSON.parse(localStorage.getItem("user"));
+      var newPlan = {};
+      newPlan.accountId = localUser.accountId;
+      newPlan.planName = this.planName;
+      newPlan.purposes = this.purposes
+      this.$http
+          .post("/plan/insert", newPlan)
+          .then((response) => {
+            this.newPlan = {};
+            this.planName = "";
+            this.purposes = 0;
+            this.getPlan();
+          });
+    },
+    getPlan() {
+      let localUser = JSON.parse(localStorage.getItem("user"));
+      this.$http.get("/plan/query",{
+        params: {
+          accountId: localUser.accountId
+        }
+      }).then((response) => {
+        console.log(response);
+        this.planList = response.data
+      })
+    },
     getTagAmount() {
-      this.$http.get("/finance/billing/monthTag").then((response) => {
+      let localUser = JSON.parse(localStorage.getItem("user"));
+      this.$http.get("/billing/monthTag", {
+        params: {
+          accountId: localUser.accountId
+        }
+      }).then((response) => {
         let array = [];
         response.data.forEach((item) => {
           array.push({
@@ -143,7 +233,7 @@ export default {
     getFinance() {
       let localUser = JSON.parse(localStorage.getItem("user"));
       this.$http
-        .get("/finance/billing/" + localUser.accountId)
+        .get("/billing/" + localUser.accountId)
         .then((response) => {
           console.log(response.data);
           this.result = response.data;

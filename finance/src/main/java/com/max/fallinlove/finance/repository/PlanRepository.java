@@ -1,6 +1,8 @@
 package com.max.fallinlove.finance.repository;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.max.fallinlove.base.exception.BusinessException;
 import com.max.fallinlove.finance.entity.Plan;
 import com.max.fallinlove.finance.mapper.PlanMapper;
 import org.springframework.stereotype.Repository;
@@ -36,6 +38,8 @@ public class PlanRepository {
         QueryWrapper<Plan> qw = new QueryWrapper<>();
         qw.eq("account_id", accountId);
         List<Plan> list = planMapper.selectList(qw);
+
+        if (CollectionUtil.isEmpty(list) || list.size() == 0) { throw new BusinessException("该账户无关联计划");}
 
         //2. 根据查询出的计划获取所有关联的数据
         List<String> planIdList = list.stream().map(Plan::getPlanId).collect(Collectors.toList());
