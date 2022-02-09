@@ -113,6 +113,10 @@ export default {
   },
   methods: {
     insertMonthPlan() {
+      if (this.monthPlanType === "" || this.monthPlanAmount === 0) {
+        alert("预算类型和金额不能为空");
+      } else {
+        
       let localUser = JSON.parse(localStorage.getItem("user"));
       var newMonthPlan = {};
       newMonthPlan.accountId = localUser.accountId;
@@ -126,6 +130,7 @@ export default {
             this.monthPlanAmount = 0;
             this.getMonthPlan();
           });
+      }
     },
     getMonthPlan() {
       let localUser = JSON.parse(localStorage.getItem("user"));
@@ -138,7 +143,10 @@ export default {
         this.monthPlanList = response.data
       })
     },
-    insertPlan() {
+    insertPlan() {      
+      if (this.planName === "" || this.purposes === 0) {
+        alert("计划名和目标金额不能为空");
+      } else {
       let localUser = JSON.parse(localStorage.getItem("user"));
       var newPlan = {};
       newPlan.accountId = localUser.accountId;
@@ -152,6 +160,7 @@ export default {
             this.purposes = 0;
             this.getPlan();
           });
+      }
     },
     getPlan() {
       let localUser = JSON.parse(localStorage.getItem("user"));
