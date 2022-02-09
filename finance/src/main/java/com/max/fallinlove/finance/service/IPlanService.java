@@ -25,7 +25,7 @@ public interface IPlanService extends IService<Plan> {
     /**
      * 根据用户Id获取所有计划
      * todo 一个人多个计划 多个人一个计划未作区分
-     * @param userId
+     * @param accountId
      * @return
      */
     List<PlanDTO> queryPlanList(Integer accountId);

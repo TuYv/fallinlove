@@ -3,6 +3,7 @@ package com.max.fallinlove.finance.controller;
 
 import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
+import com.max.fallinlove.finance.dto.MonthTagAmountDTO;
 import com.max.fallinlove.finance.req.FinanceReq;
 import com.max.fallinlove.finance.dto.FinanceDTO;
 import com.max.fallinlove.finance.dto.MonthAmountDTO;
@@ -96,8 +97,8 @@ public class FinanceController {
 
     @RequestMapping(value = "/monthTag", method = RequestMethod.GET)
     @Operation(summary = "当月tag费用 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
-    public Result MonthTagAmount() {
-        List<MonthAmountDetail> list = monthAmountDetailService.getMonthTagAmountList();
+    public Result<List<MonthTagAmountDTO>> MonthTagAmount(@RequestParam("accountId") Integer accountId) {
+        List<MonthTagAmountDTO> list = monthAmountDetailService.getMonthTagAmountList(accountId);
         return ResultUtils.success(list);
     }
 

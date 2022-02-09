@@ -18,8 +18,9 @@ public class MonthAmountRepository {
     private MonthAmountMapper monthAmountMapper;
 
 
-    public MonthAmount getByTime(String year, String month) {
+    public MonthAmount getByTime(Integer accountId, String year, String month) {
         QueryWrapper<MonthAmount> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
         queryWrapper.eq("year",year);
         queryWrapper.eq("month",month);
         return monthAmountMapper.selectOne(queryWrapper);

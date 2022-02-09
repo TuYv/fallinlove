@@ -1,7 +1,12 @@
 package com.max.fallinlove.finance.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.max.fallinlove.base.exception.BusinessException;
+import com.max.fallinlove.finance.dto.MonthTagAmountDTO;
+import com.max.fallinlove.finance.repository.MonthAmountDetailRepository;
+import com.max.fallinlove.finance.repository.MonthAmountRepository;
 import com.max.fallinlove.finance.req.FinanceReq;
 import com.max.fallinlove.finance.entity.MonthAmount;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
@@ -26,10 +31,10 @@ import javax.annotation.Resource;
 @Service
 public class MonthAmountDetailServiceImpl extends ServiceImpl<MonthAmountDetailMapper, MonthAmountDetail> implements IMonthAmountDetailService {
 
-    @Resource
-    private MonthAmountMapper monthAmountMapper;
-    @Resource
-    private MonthAmountDetailMapper monthAmountDetailMapper;
+    @Resource private MonthAmountMapper monthAmountMapper;
+    @Resource private MonthAmountDetailMapper monthAmountDetailMapper;
+    @Resource private MonthAmountRepository monthAmountRepository;
+    @Resource private MonthAmountDetailRepository monthAmountDetailRepository;
 
     @Override public void saveMonthAmountDetail(int id, FinanceReq insertFinance) {
         MonthAmountDetail monthAmountDetail = new MonthAmountDetail();
@@ -52,18 +57,17 @@ public class MonthAmountDetailServiceImpl extends ServiceImpl<MonthAmountDetailM
     }
 
     @Override
-    public List<MonthAmountDetail> getMonthTagAmountList() {
-        //获取当前月的总记录
+    public List<MonthTagAmountDTO> getMonthTagAmountList(Integer accountId) {
+        //1.获取当前月的总记录
         int month = LocalDate.now().getMonthValue();
         String m = month < 10 ? "0" + month : String.valueOf(month);
         String y = String.valueOf(LocalDate.now().getYear());
-        QueryWrapper<MonthAmount> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("year", y);
-        queryWrapper.eq("month",m);
-        MonthAmount monthAmount = monthAmountMapper.selectOne(queryWrapper);
+        MonthAmount monthAmount = monthAmountRepository.getByTime(accountId, y, m);
 
-        //获取tag记录
-        List<MonthAmountDetail> list = monthAmountDetailMapper.queryMonthTagAmount("0", monthAmount.getId());
+        if (ObjectUtil.isNull(monthAmount)) {throw new BusinessException("该账户暂无记账记录");}
+
+        //2.获取tag记录
+        List<MonthTagAmountDTO> list = monthAmountDetailRepository.getMonthTagAmountList("0", monthAmount.getId());
         return list;
     }
 }

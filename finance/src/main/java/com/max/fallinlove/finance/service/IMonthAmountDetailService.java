@@ -1,6 +1,7 @@
 package com.max.fallinlove.finance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.max.fallinlove.finance.dto.MonthTagAmountDTO;
 import com.max.fallinlove.finance.req.FinanceReq;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
 import java.util.List;
@@ -26,5 +27,5 @@ public interface IMonthAmountDetailService extends IService<MonthAmountDetail> {
      * 获取当前月的tag费用
      * @return
      */
-    List<MonthAmountDetail> getMonthTagAmountList();
+    List<MonthTagAmountDTO> getMonthTagAmountList(Integer accountId);
 }

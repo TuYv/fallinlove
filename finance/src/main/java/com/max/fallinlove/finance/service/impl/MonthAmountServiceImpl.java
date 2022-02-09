@@ -41,7 +41,7 @@ public class MonthAmountServiceImpl extends ServiceImpl<MonthAmountMapper, Month
     @Override
     public MonthAmount getByTime(Integer id, String year, String month) {
         //从数据库中查询
-        MonthAmount monthAmount = monthAmountRepository.getByTime(year, month);
+        MonthAmount monthAmount = monthAmountRepository.getByTime(id, year, month);
         if (Objects.isNull(monthAmount)) {
             //todo 可以设置成月初自动生成当月账单
             monthAmount = defaultMonthAmount(id, year, month);
