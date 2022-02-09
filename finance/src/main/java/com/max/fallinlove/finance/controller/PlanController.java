@@ -11,6 +11,7 @@ import com.max.fallinlove.finance.service.IMonthPlanService;
 import com.max.fallinlove.finance.service.IPlanService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import java.math.BigDecimal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +59,15 @@ public class PlanController {
     public Result<List<PlanDTO>> query(@RequestParam(value = "accountId") Integer accountId) {
         List<PlanDTO> result = planService.queryPlanList(accountId);
         return ResultUtils.success(result);
+    }
+
+    @RequestMapping(value = "/amount/add", method = RequestMethod.POST)
+    @Operation(summary = "转入金额 - 【涂瑜】", tags = {"【预算 模块】预算相关 - 【涂瑜】", "涂瑜"})
+    public Result<List<PlanDTO>> addAmout(@RequestParam(value = "accountId") Integer accountId,
+                                          @RequestParam(value = "planId") String planId,
+                                          @RequestParam(value = "amount") BigDecimal amount) {
+        planService.addAmount(accountId, planId, amount);
+        return ResultUtils.success();
     }
 
     @RequestMapping(value = "/monthPlan/insert", method = RequestMethod.POST)

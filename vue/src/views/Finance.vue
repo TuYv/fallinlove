@@ -2,20 +2,25 @@
   <div>
     <el-container>
       <el-header>记账 Demo</el-header>
-      <base-progress
-      :count="100"
-      :value="50"
-      />
       <div v-if="planList.length > 0"> 
+      <base-progress
+      :count=planList[0].purposes
+      :list=planList
+      :showNumber=false
+      :showName=false
+      />
       <el-alert>目标 {{planList[0].purposes}} </el-alert>
       <div v-for="(plan,index) in planList"
       :key="index">
       {{plan.nickName}} : {{plan.planName}} :: {{plan.saved}}
       </div>
+
+      <el-input-number v-model="saveMoney" placeholder="请输入转入金额" />
+      <el-button type="primary" icon="el-icon-edit" @click="addAmount()" >转入 </el-button>
       </div>
-      <el-input v-model="planName" placeholder="请输入计划名" />
+      <!-- <el-input v-model="planName" placeholder="请输入计划名" />
       <el-input-number v-model="purposes" placeholder="请输入目标金额" />
-      <el-button type="primary" icon="el-icon-edit" @click="insertPlan()" >新增计划 </el-button>
+      <el-button type="primary" icon="el-icon-edit" @click="insertPlan()" >新增计划 </el-button> -->
       <div v-if="monthPlanList.length > 0"> 
       <div v-for="(monthPlan,index) in monthPlanList"
       :key="index">
@@ -102,6 +107,7 @@ export default {
       purposes: 0,
       monthPlanType: "",
       monthPlanAmount: 0,
+      saveMoney: 0,
       time: new Date(),
     };
   },
@@ -112,6 +118,22 @@ export default {
     this.getMonthPlan();
   },
   methods: {
+    addAmount() {
+      if (this.saveMoney === 0) {
+        alert("0元无法存入");
+      } else {
+        let localUser = JSON.parse(localStorage.getItem("user"));
+        this.$http.post("/plan/amount/add", {
+          params: {
+          accountId: localUser.accountId,
+          planId: this.planList[0].planId,
+          amount: this.saveMoney
+          }
+        }).then(() => {
+          this.getPlan();
+        })
+      }
+    },
     insertMonthPlan() {
       if (this.monthPlanType === "" || this.monthPlanAmount === 0) {
         alert("预算类型和金额不能为空");

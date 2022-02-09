@@ -61,11 +61,16 @@ public class PlanServiceImpl extends ServiceImpl<PlanMapper, Plan> implements IP
         List<PlanDTO> result = list.stream().map(plan -> {
             PlanDTO dto = new PlanDTO();
             BeanUtils.copyProperties(plan, dto);
-            dto.setNickName(accountService.getById(accountId).getNickName());
+            dto.setNickName(accountService.getById(plan.getAccountId()).getNickName());
 
             return dto;
         }).collect(Collectors.toList());
         return result;
+    }
+
+    @Override
+    public void addAmount(int accountId, String planId, BigDecimal amount) {
+        planRepository.addAmount(accountId, planId, amount);
     }
 
     //todo 抽出生成id的单独代码

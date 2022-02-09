@@ -6,6 +6,7 @@ import com.max.fallinlove.finance.entity.Plan;
 import com.max.fallinlove.finance.req.JoinPlanReq;
 import com.max.fallinlove.finance.req.PlanReq;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -29,4 +30,10 @@ public interface IPlanService extends IService<Plan> {
      * @return
      */
     List<PlanDTO> queryPlanList(Integer accountId);
+
+    /**
+     * 给一个计划存钱
+     * @param amount
+     */
+    void addAmount(int accountId, String planId, BigDecimal amount);
 }

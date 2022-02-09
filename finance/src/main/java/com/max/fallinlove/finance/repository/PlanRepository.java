@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.max.fallinlove.base.exception.BusinessException;
 import com.max.fallinlove.finance.entity.Plan;
 import com.max.fallinlove.finance.mapper.PlanMapper;
+import java.math.BigDecimal;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -47,5 +48,9 @@ public class PlanRepository {
         qw.in("plan_id", planIdList);
 
         return planMapper.selectList(qw);
+    }
+
+    public void addAmount(int accountId, String planId, BigDecimal amount) {
+        planMapper.updateSaved(accountId, planId, amount);
     }
 }
