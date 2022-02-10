@@ -2,6 +2,8 @@ package com.max.fallinlove.finance.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.max.fallinlove.finance.entity.Account;
+import java.math.BigDecimal;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,5 +15,5 @@ import com.max.fallinlove.finance.entity.Account;
  */
 public interface AccountMapper extends BaseMapper<Account> {
 
-
+    int updateAmountById(@Param("id") int id, @Param("amount") BigDecimal amount);
 }

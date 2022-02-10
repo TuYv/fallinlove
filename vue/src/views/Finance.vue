@@ -119,11 +119,14 @@ export default {
   },
   methods: {
     addAmount() {
-      if (this.saveMoney === 0) {
+      if (this.saveMoney === undefined || this.saveMoney === 0) {
         alert("0元无法存入");
-      } else {
+      } else if (this.saveMoney > this.allAmount) {
+        alert("余额不足，无法完成存入")
+      }
+       else {
         let localUser = JSON.parse(localStorage.getItem("user"));
-        this.$http.post("/plan/amount/add", {
+        this.$http.get("/plan/amount/add", {
           params: {
           accountId: localUser.accountId,
           planId: this.planList[0].planId,

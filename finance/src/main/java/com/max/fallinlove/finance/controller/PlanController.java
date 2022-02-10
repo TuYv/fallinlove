@@ -61,7 +61,7 @@ public class PlanController {
         return ResultUtils.success(result);
     }
 
-    @RequestMapping(value = "/amount/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/amount/add", method = RequestMethod.GET)
     @Operation(summary = "转入金额 - 【涂瑜】", tags = {"【预算 模块】预算相关 - 【涂瑜】", "涂瑜"})
     public Result<List<PlanDTO>> addAmout(@RequestParam(value = "accountId") Integer accountId,
                                           @RequestParam(value = "planId") String planId,

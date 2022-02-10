@@ -3,7 +3,10 @@ package com.max.fallinlove.finance.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.max.fallinlove.finance.entity.Account;
 import com.max.fallinlove.finance.mapper.AccountMapper;
+import com.max.fallinlove.finance.repository.AccountRepository;
 import com.max.fallinlove.finance.service.IAccountService;
+import java.math.BigDecimal;
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements IAccountService {
+
+    @Resource private AccountRepository accountRepository;
+
+    @Override
+    public int updateAmountById(int id, BigDecimal amount) {
+        return accountRepository.updateAmountById(id, amount);
+    }
 
 //    @Autowired
 //    JedisPool jedisPool;

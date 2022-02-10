@@ -4,9 +4,8 @@
 
   <update id="updateSaved">
     update plan
-    set saved = saved + #{amount}
+    set saved = saved + ${amount}
     where account_id = ${accountId}
-    and plan_id = ${planId}
-    and saved = saved
+    and plan_id = #{planId}
   </update>
 </mapper>

@@ -70,6 +70,9 @@ public class PlanServiceImpl extends ServiceImpl<PlanMapper, Plan> implements IP
 
     @Override
     public void addAmount(int accountId, String planId, BigDecimal amount) {
+        //1. 从账户中转出
+        accountService.updateAmountById(accountId, amount.negate());
+        //2. 转入计划中
         planRepository.addAmount(accountId, planId, amount);
     }
 
