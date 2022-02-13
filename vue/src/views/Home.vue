@@ -13,7 +13,7 @@
         </el-dropdown>
       </el-header>
       <el-container>
-        <el-aside style="width: 200px">
+        <el-aside :width="isCollapse?'64px':'200px'">
           <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
