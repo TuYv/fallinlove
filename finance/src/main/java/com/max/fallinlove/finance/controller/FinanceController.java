@@ -86,11 +86,6 @@ public class FinanceController {
 //        Jedis jedis = jedisPool.getResource();
 //        String clientID = UUID.randomUUID().toString();
 //        jedis.set(FIN_DISTRIBUTED_LOCK,clientID, SetParams.setParams().nx().ex(1800));
-        //1.更新账户表
-        //Account account = new Account();
-        //account.setId(insertFinance.getId());
-        //account.setTotalAmount(insertFinance.getTotalAmount());
-        //accountService.saveOrUpdate(account);
         Boolean result = billingService.insertMonthAmountDetail(userId, insertFinance);
         return result ? ResultUtils.success() : ResultUtils.fail("0000","新增失败，请重试！");
     }

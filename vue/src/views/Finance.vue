@@ -126,7 +126,7 @@ export default {
       }
        else {
         let localUser = JSON.parse(localStorage.getItem("user"));
-        this.$http.get("/plan/amount/add", {
+        this.$http.get("/finance/plan/amount/add", {
           params: {
           accountId: localUser.accountId,
           planId: this.planList[0].planId,
@@ -148,7 +148,7 @@ export default {
       newMonthPlan.planType = this.monthPlanType;
       newMonthPlan.planAmount = this.monthPlanAmount;
       this.$http
-          .post("/plan/monthPlan/insert", newMonthPlan)
+          .post("/finance/plan/monthPlan/insert", newMonthPlan)
           .then((response) => {
             this.newMonthPlan = {};
             this.monthPlanType = "";
@@ -159,7 +159,7 @@ export default {
     },
     getMonthPlan() {
       let localUser = JSON.parse(localStorage.getItem("user"));
-      this.$http.get("/plan/monthPlan/query",{
+      this.$http.get("/finance/plan/monthPlan/query",{
         params: {
           accountId: localUser.accountId
         }
@@ -178,7 +178,7 @@ export default {
       newPlan.planName = this.planName;
       newPlan.purposes = this.purposes
       this.$http
-          .post("/plan/insert", newPlan)
+          .post("/finance/plan/insert", newPlan)
           .then((response) => {
             this.newPlan = {};
             this.planName = "";
@@ -189,7 +189,7 @@ export default {
     },
     getPlan() {
       let localUser = JSON.parse(localStorage.getItem("user"));
-      this.$http.get("/plan/query",{
+      this.$http.get("/finance/plan/query",{
         params: {
           accountId: localUser.accountId
         }
@@ -200,7 +200,7 @@ export default {
     },
     getTagAmount() {
       let localUser = JSON.parse(localStorage.getItem("user"));
-      this.$http.get("/billing/monthTag", {
+      this.$http.get("/finance/billing/monthTag", {
         params: {
           accountId: localUser.accountId
         }
@@ -267,7 +267,7 @@ export default {
     getFinance() {
       let localUser = JSON.parse(localStorage.getItem("user"));
       this.$http
-        .get("/billing/" + localUser.accountId)
+        .get("/finance/billing/" + localUser.accountId)
         .then((response) => {
           console.log(response.data);
           this.result = response.data;

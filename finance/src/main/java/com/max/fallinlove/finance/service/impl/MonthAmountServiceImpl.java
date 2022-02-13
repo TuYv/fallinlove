@@ -58,9 +58,9 @@ public class MonthAmountServiceImpl extends ServiceImpl<MonthAmountMapper, Month
      */
     private MonthAmount defaultMonthAmount(Integer id, String year, String month) {
         MonthAmount monthAmount = new MonthAmount();
-        monthAmount.setMonth(year);
+        monthAmount.setMonth(month);
         monthAmount.setAccountId(id);
-        monthAmount.setYear(month);
+        monthAmount.setYear(year);
         monthAmount.setSpend(BigDecimal.ZERO);
         monthAmount.setIncome(BigDecimal.ZERO);
 
