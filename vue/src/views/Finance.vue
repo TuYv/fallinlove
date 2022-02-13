@@ -74,6 +74,16 @@
           @blur="changeNewTag()"
         />
         <el-input v-model="reason" placeholder="请输入备注" />
+
+        <el-select v-model="insertPlanType" placeholder="请选择">
+          <el-option
+            v-for="item in monthPlanList"
+            :key="item.id"
+            :label="item.planType"
+            :value="item.id">
+          </el-option>
+        </el-select>
+
         <el-button type="success" round @click="income('1')">收入</el-button>
         <el-button type="danger" round @click="income('0')">支出</el-button>
 
@@ -108,6 +118,7 @@ export default {
       monthPlanType: "",
       monthPlanAmount: 0,
       saveMoney: 0,
+      insertPlanType: 0,
       time: new Date(),
     };
   },
@@ -361,6 +372,9 @@ export default {
           insertFin.tagName = this.tag;
         }
         insertFin.amount = parseFloat(this.money);
+        if (type === '0') {
+          insertFin.monthPlanId =  this.insertPlanType
+        }
         console.log(insertFin);
         this.$http
           .post("/finance/billing/insert", insertFin)

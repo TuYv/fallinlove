@@ -10,6 +10,7 @@ import java.math.BigDecimal;
  */
 @Data
 public class MonthPlanDTO {
+    private Integer id;
     private String planType;
     private BigDecimal planAmount;
 }
