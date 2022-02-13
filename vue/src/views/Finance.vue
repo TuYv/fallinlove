@@ -118,7 +118,7 @@ export default {
       monthPlanType: "",
       monthPlanAmount: 0,
       saveMoney: 0,
-      insertPlanType: 0,
+      insertPlanType: '',
       time: new Date(),
     };
   },
@@ -372,6 +372,7 @@ export default {
           insertFin.tagName = this.tag;
         }
         insertFin.amount = parseFloat(this.money);
+        console.log(this.insertPlanType)
         if (type === '0') {
           insertFin.monthPlanId =  this.insertPlanType
         }
