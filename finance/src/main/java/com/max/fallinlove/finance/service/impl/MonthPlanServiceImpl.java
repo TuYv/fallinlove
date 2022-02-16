@@ -2,11 +2,15 @@ package com.max.fallinlove.finance.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.max.fallinlove.finance.dto.MonthPlanDTO;
+import com.max.fallinlove.finance.entity.MonthAmount;
 import com.max.fallinlove.finance.entity.MonthPlan;
 import com.max.fallinlove.finance.mapper.MonthPlanMapper;
+import com.max.fallinlove.finance.repository.MonthAmountDetailRepository;
+import com.max.fallinlove.finance.repository.MonthAmountRepository;
 import com.max.fallinlove.finance.repository.MonthPlanRepository;
 import com.max.fallinlove.finance.req.MonthPlanReq;
 import com.max.fallinlove.finance.service.IMonthPlanService;
+import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +28,8 @@ import java.util.List;
 public class MonthPlanServiceImpl extends ServiceImpl<MonthPlanMapper, MonthPlan> implements IMonthPlanService {
 
     @Resource private MonthPlanRepository monthPlanRepository;
+    @Resource private MonthAmountRepository monthAmountRepository;
+    @Resource private MonthAmountDetailRepository monthAmountDetailRepository;
 
     @Override public void saveMonthPlan(MonthPlanReq req) {
         MonthPlan monthPlan = new MonthPlan();
@@ -36,6 +42,24 @@ public class MonthPlanServiceImpl extends ServiceImpl<MonthPlanMapper, MonthPlan
 
     @Override public List<MonthPlanDTO> queryMonthPlan(Integer accountId) {
 
-        return monthPlanRepository.queryMonthPlanList(accountId);
+        List<MonthPlanDTO> result = monthPlanRepository.queryMonthPlanList(accountId);
+
+
+        //1.获取当前月的总记录
+        int month = LocalDate.now().getMonthValue();
+        String m = month < 10 ? "0" + month : String.valueOf(month);
+        String y = String.valueOf(LocalDate.now().getYear());
+        MonthAmount monthAmount = monthAmountRepository.getByTime(accountId, y, m);
+
+        List<MonthPlanDTO> newList = monthAmountDetailRepository.getUsedAmountForMonthPlan(monthAmount.getId());
+        result.forEach(x -> {
+            newList.forEach(z -> {
+                if (x.getId() == z.getId()) {
+                    x.setUsedAmount(z.getUsedAmount());
+                }
+            });
+        });
+
+        return result;
     }
 }

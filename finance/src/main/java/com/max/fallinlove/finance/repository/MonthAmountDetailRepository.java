@@ -2,11 +2,13 @@ package com.max.fallinlove.finance.repository;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.max.fallinlove.finance.dto.MonthPlanDTO;
 import com.max.fallinlove.finance.dto.MonthTagAmountDTO;
 import com.max.fallinlove.finance.entity.MonthAmount;
 import com.max.fallinlove.finance.entity.MonthAmountDetail;
 import com.max.fallinlove.finance.mapper.MonthAmountDetailMapper;
 import com.max.fallinlove.finance.mapper.MonthAmountMapper;
+import java.math.BigDecimal;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -21,8 +23,6 @@ import java.util.stream.Collectors;
 @Repository
 public class MonthAmountDetailRepository {
 
-    @Resource
-    private MonthAmountMapper monthAmountMapper;
     @Resource
     private MonthAmountDetailMapper monthAmountDetailMapper;
 
@@ -40,5 +40,9 @@ public class MonthAmountDetailRepository {
             return dto;
         }).collect(Collectors.toList());
         return result;
+    }
+
+    public List<MonthPlanDTO> getUsedAmountForMonthPlan( Integer monthAmountId) {
+        return monthAmountDetailMapper.queryUsedAmountForMonthPlan(monthAmountId);
     }
 }
