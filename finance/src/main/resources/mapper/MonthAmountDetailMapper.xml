@@ -13,9 +13,9 @@
   <select id="queryUsedAmountForMonthPlan"
     resultType="com.max.fallinlove.finance.dto.MonthPlanDTO">
         select
-            month_plan_id as id, sum(amount) as amount
+            month_plan_id as id, sum(amount) as usedAmount
         from month_amount_detail
         where month_amount_id = #{monthAmountId}
-        group by monthh_plan_id;
+        group by month_plan_id;
   </select>
 </mapper>

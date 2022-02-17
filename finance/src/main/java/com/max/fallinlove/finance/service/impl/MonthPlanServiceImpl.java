@@ -1,5 +1,6 @@
 package com.max.fallinlove.finance.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.max.fallinlove.finance.dto.MonthPlanDTO;
 import com.max.fallinlove.finance.entity.MonthAmount;
@@ -10,6 +11,8 @@ import com.max.fallinlove.finance.repository.MonthAmountRepository;
 import com.max.fallinlove.finance.repository.MonthPlanRepository;
 import com.max.fallinlove.finance.req.MonthPlanReq;
 import com.max.fallinlove.finance.service.IMonthPlanService;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
@@ -54,10 +57,9 @@ public class MonthPlanServiceImpl extends ServiceImpl<MonthPlanMapper, MonthPlan
         List<MonthPlanDTO> newList = monthAmountDetailRepository.getUsedAmountForMonthPlan(monthAmount.getId());
         result.forEach(x -> {
             newList.forEach(z -> {
-                if (x.getId() == z.getId()) {
-                    x.setUsedAmount(z.getUsedAmount());
-                }
+                if (x.getId().equals(z.getId())) {x.setUsedAmount(z.getUsedAmount());}
             });
+            if (ObjectUtil.isNull(x.getUsedAmount())) {x.setUsedAmount(BigDecimal.ZERO);}
         });
 
         return result;

@@ -24,7 +24,7 @@
       <div v-if="monthPlanList.length > 0"> 
       <div v-for="(monthPlan,index) in monthPlanList"
       :key="index">
-      {{monthPlan.planType}} :: {{monthPlan.planAmount}}
+      {{monthPlan.planType}} :: {{monthPlan.planAmount}} :: {{monthPlan.usedAmount}}
       </div>
       </div>
       <el-input v-model="monthPlanType" placeholder="请输入预算类型" />
