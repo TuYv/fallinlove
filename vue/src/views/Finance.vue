@@ -2,14 +2,14 @@
   <div>
     <el-container>
       <el-header>记账 Demo</el-header>
-      <div v-if="planList.length > 0"> 
-      <base-progress
+      <div v-if="planList.length > 0">
+        
+      目标 {{planList[0].purposes}} <base-progress
       :count=planList[0].purposes
       :list=planList
       :showNumber=false
       :showName=false
       />
-      <el-alert>目标 {{planList[0].purposes}} </el-alert>
       <div v-for="(plan,index) in planList"
       :key="index">
       {{plan.nickName}} : {{plan.planName}} :: {{plan.saved}}
