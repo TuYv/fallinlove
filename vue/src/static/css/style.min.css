@@ -478,7 +478,7 @@ select[multiple] {
 }
 
 .container.grid-sm {
-    max-width: 680px
+    max-width: 680px;
 }
 
 .container.grid-xs {

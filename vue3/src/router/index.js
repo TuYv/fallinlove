@@ -1,6 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router"
 import { storageUtils } from "@/utils/common"
 
+/**
+ * menu: 是否在左侧菜单显示
+ * login: 是否需要登录才能进入
+ * title: 菜单的标题
+ * icon: 菜单的图标
+ */
+
 const routes = [
   {
     path: '/',
@@ -8,24 +15,31 @@ const routes = [
     component: () => import('@/views/Home.vue'),
     meta: {
       title: '常用功能',
-      icon: ''
+      icon: 'menu'
     },
+    menu: true,
     children: [
       {
         path: '/',
         name: 'Finance',
         component: () => import('@/views/Finance.vue'),
         meta: {
-          login: true
-        }
+          login: true,
+          title: 'finance',
+          icon: 'list'
+        },
+        menu: true
       },
       {
-        path: 'note',
+        path: '/note',
         name: 'Note',
         component: () => import('@/views/Note.vue'),
         meta: {
-          login: true
-        }
+          login: true,
+          title: 'note',
+          icon: 'checked'
+        },
+        menu: true
       },
     ]
   },
@@ -42,7 +56,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-
   // 需要登录的页面检查是否有登录信息
   const needLogin = to.meta?.login
   if (needLogin) {

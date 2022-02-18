@@ -5,10 +5,10 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as Icons from '@element-plus/icons-vue'
 import 'normalize.css'
-import './assets/styles/style.min.scss'
+import './assets/styles/index.scss'
 
 const app = createApp(App)
-app .use(router).use(ElementPlus).mount('#app')
+app.use(router).use(ElementPlus).mount('#app')
 
 for (const iconName in Icons) {
   if (Reflect.has(Icons, iconName)) {

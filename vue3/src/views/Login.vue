@@ -5,7 +5,7 @@
         {{ formTypeName }}
       </div>
 
-      <!-- 登录 -->
+      <!-- 登录/注册 -->
       <el-form :model="user" label-width="80px">
         <el-form-item label="用户名" prop="userName">
           <el-input v-model="user.userName" placeholder="请输入用户名" />
