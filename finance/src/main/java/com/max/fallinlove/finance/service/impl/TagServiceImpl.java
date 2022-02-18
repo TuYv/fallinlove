@@ -1,6 +1,7 @@
 package com.max.fallinlove.finance.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.alibaba.nacos.common.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.max.fallinlove.common.tools.RedisUtils;
@@ -32,7 +33,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
 
     @Override
     public void updateByTagName(Integer userId,String tagName) {
-        tagRepository.updateByTagName(userId, tagName);
+        if (StringUtils.isNotEmpty(tagName)) {
+            tagRepository.updateByTagName(userId, tagName);
+        }
     }
 
     @Override

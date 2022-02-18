@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = "todo列表")
 @RestController
-@RequestMapping("/max/todo")
+@RequestMapping("/todo")
 public class TodoController {
 
     @Autowired
