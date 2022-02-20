@@ -2,8 +2,8 @@
   <div>
     <el-container>
       <el-header>记账 Demo</el-header>
-      <div v-if="planList.length > 0">
-        
+      <div v-if="planList.length > 0"> 
+
       目标 {{planList[0].purposes}} <base-progress
       :count=planList[0].purposes
       :list=planList
@@ -383,6 +383,9 @@ export default {
             this.insertFin = {};
             this.newTag = "";
             this.tag = "";
+            this.money = 0;
+            this.insertPlanType = 0;
+            this.reason = "";
             this.getFinance();
           });
       }
