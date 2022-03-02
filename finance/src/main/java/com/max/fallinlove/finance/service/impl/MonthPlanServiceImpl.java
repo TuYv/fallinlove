@@ -54,6 +54,11 @@ public class MonthPlanServiceImpl extends ServiceImpl<MonthPlanMapper, MonthPlan
         String y = String.valueOf(LocalDate.now().getYear());
         MonthAmount monthAmount = monthAmountRepository.getByTime(accountId, y, m);
 
+        //增加判断这个月可能没有相关预算的消费
+        if (monthAmount == null) {
+            return result;
+        }
+
         List<MonthPlanDTO> newList = monthAmountDetailRepository.getUsedAmountForMonthPlan(monthAmount.getId());
         result.forEach(x -> {
             newList.forEach(z -> {

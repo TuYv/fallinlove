@@ -19,5 +19,10 @@ public interface IMonthPlanService extends IService<MonthPlan> {
 
     void saveMonthPlan(MonthPlanReq req);
 
+    /**
+     * 获取预算计划
+     * @param accountId
+     * @return
+     */
     List<MonthPlanDTO> queryMonthPlan(Integer accountId);
 }
