@@ -1,6 +1,8 @@
 <template>
   <div class="base-progress">
+            目标 {{innerList[0].purposes}} : 
     <div class="progress-bar">
+      
       <div
         class="progress-inner"
         v-for="(item, index) in innerList"
@@ -67,12 +69,12 @@ export default {
 
 <style scoped>
 .base-progress {
-  margin-left: 100px;
+  margin-left: 200px;
   display: flex;
   align-items: center;
 }
 .progress-bar {
-  width: 300px;
+  width: 500px;
   height: 20px;
   border-radius: 10px;
   background-color: #ddd;

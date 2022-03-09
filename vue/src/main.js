@@ -5,6 +5,7 @@ import './static/css/style.min.css'
 import http from './api/config'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
+import "nes.css/css/nes.min.css";
 
 Vue.use(ElementUI)
 Vue.prototype.$http = http

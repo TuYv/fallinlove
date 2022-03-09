@@ -4,12 +4,13 @@
       <el-header>记账 Demo</el-header>
       <div v-if="planList.length > 0"> 
 
-      目标 {{planList[0].purposes}} <base-progress
-      :count=planList[0].purposes
-      :list=planList
-      :showNumber=false
-      :showName=false
-      />
+            <base-progress
+              :count=planList[0].purposes
+              :list=planList
+              :showNumber=false
+              :showName=false
+            />
+      
       <div v-for="(plan,index) in planList"
       :key="index">
       {{plan.nickName}} : {{plan.planName}} :: {{plan.saved}}
@@ -27,9 +28,11 @@
       {{monthPlan.planType}} :: {{monthPlan.planAmount}} :: {{monthPlan.usedAmount}}
       </div>
       </div>
-      <el-input v-model="monthPlanType" placeholder="请输入预算类型" />
-      <el-input-number v-model="monthPlanAmount" placeholder="请输入预算金额" />
-      <el-button type="primary" icon="el-icon-edit" @click="insertMonthPlan()">新增预算 </el-button>
+      <el-row :gutter="20" type="flex">
+        <el-col :span="4" :offset="4"><el-input v-model="monthPlanType" placeholder="请输入预算类型" /></el-col>
+        <el-col :span="4"><el-input-number v-model="monthPlanAmount" placeholder="请输入预算金额" /></el-col>
+        <el-col :span="2"><el-button type="primary" icon="el-icon-edit" @click="insertMonthPlan()">新增预算 </el-button></el-col>
+      </el-row>
       <el-main>
         <span>总金额：{{ allAmount }}</span>
         <el-table :data="monthList" style="width: 100%">
@@ -407,4 +410,30 @@ export default {
   margin-bottom: 0;
   width: 50%;
 }
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
 </style>
