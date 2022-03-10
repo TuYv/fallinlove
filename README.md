@@ -1,5 +1,12 @@
 # fallinlove
 
+## 当前网站
+[fallinlove](http://101.34.27.48/)
+
+## openApiDoc
+[openApiDoc](http://101.34.27.48/api/doc.html)
+
+## 待办
 目前有五个模块
 
 - [X] gateway -- 网关模块
