@@ -19,10 +19,16 @@
   </properties>
   <dependencies>
     <!-- swagger3 begin -->
-    <dependency>
+<!--    <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-boot-starter</artifactId>
       <version>${springfox-boot-starter.version}</version>
+    </dependency>-->
+
+    <dependency>
+      <groupId>com.github.xiaoymin</groupId>
+      <artifactId>knife4j-spring-boot-starter</artifactId>
+      <version>3.0.3</version>
     </dependency>
     <!--其他工具-->
     <dependency>
