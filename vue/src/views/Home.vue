@@ -14,6 +14,7 @@
       </el-header>
       <el-container>
         <el-aside :width="isCollapse?'64px':'200px'">
+          <div v-if="user.id === 1">
           <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
@@ -61,6 +62,7 @@
               </el-menu-item>
             </el-submenu>
           </el-menu>
+          </div>
         </el-aside>
         <el-main>
           <router-view></router-view>
