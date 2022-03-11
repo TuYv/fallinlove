@@ -28,17 +28,18 @@ public class BillingServiceImpl implements IBillingService {
 
     /**
      * 新增记账
-     * @param accountId
+     * @param userId
      * @param insertFinance
      * @return
      */
     @Override
     @Transactional
-    public Boolean insertMonthAmountDetail(int accountId, FinanceReq insertFinance) {
+    public Boolean insertMonthAmountDetail(int userId, FinanceReq insertFinance) {
+        int accountId = insertFinance.getId();
         //1. 更新余额
         BigDecimal amount = insertFinance.getAmount();
         //2. 更新月账单
-        MonthAmount monthAmount = monthAmountService.getByTime(insertFinance.getId(), insertFinance.getYear(), insertFinance.getMonth());
+        MonthAmount monthAmount = monthAmountService.getByTime(accountId, insertFinance.getYear(), insertFinance.getMonth());
 
         if (insertFinance.getAmountType().equals(FinanceConstants.AMOUNT_TYPE_INCOME)) {
             monthAmount.setIncome(monthAmount.getIncome().add(insertFinance.getAmount()));
