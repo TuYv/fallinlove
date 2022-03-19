@@ -123,6 +123,7 @@ export default {
       saveMoney: 0,
       insertPlanType: '',
       time: new Date(),
+      timer: null,
     };
   },
   created() {
@@ -130,8 +131,23 @@ export default {
     this.getTagAmount();
     this.getPlan();
     this.getMonthPlan();
+    this.timer = setInterval(() => {
+      this.getTheWord()
+    },10000)
   },
   methods: {
+    getTheWord() {
+      this.$http.get("https://v1.hitokoto.cn?c=d&c=h&c=i&c=k")
+      .then((response) => {
+        console.log(response);
+        this.$message({
+          center: true,
+          dangerouslyUseHTMLString: true,
+          message: '<i>' + response.hitokoto + '</i><br> by                 ' + response.from + (response.from_who === null ? "" : '-' + response.from_who),
+          type: 'success'
+        })
+      })
+    },
     addAmount() {
       if (this.saveMoney === undefined || this.saveMoney === 0) {
         alert("0元无法存入");
