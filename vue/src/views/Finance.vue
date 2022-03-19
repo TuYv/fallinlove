@@ -127,6 +127,7 @@ export default {
     };
   },
   created() {
+    document.title='极简记账'
     this.getFinance();
     this.getTagAmount();
     this.getPlan();
@@ -134,6 +135,21 @@ export default {
     this.timer = setInterval(() => {
       this.getTheWord()
     },10000)
+  },
+  mounted () {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        // 隐藏
+        document.title='等待中...'
+        clearInterval(this.timer)
+      } else {
+        // 显示
+        document.title='极简记账'
+        this.timer = setInterval(() => {
+          this.getTheWord()
+        }, 10000)
+      }
+    })
   },
   methods: {
     getTheWord() {
