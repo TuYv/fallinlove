@@ -7,3 +7,5 @@
  引入knife4j, 对外提供OpenApiDoc
 ### 19
  引入[一言API](https://hitokoto.cn/)
+### 20
+ 切出窗口会有不一样的效果
