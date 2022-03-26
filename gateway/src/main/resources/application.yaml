@@ -61,7 +61,6 @@ spring:
    #url: jdbc:mysql://127.0.0.1:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
    username: root
    password: 1qaz#EDC
-
     #mybatis-plus
   mybatis-plus:
     mapper-locations: classpath:com/max/fallinlove/account/mapper/xml/*.xml

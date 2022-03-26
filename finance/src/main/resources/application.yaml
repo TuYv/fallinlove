@@ -30,7 +30,17 @@ spring:
   mybatis-plus:
     mapper-locations: classpath:com/max/fallinlove/finance/mapper/xml/*.xml
     type-aliases-package: com.max.fallinlove.finance.entity
-
+  kafka:
+    bootstrap-servers: xx.xx.xx.xx:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      auto-commit-interval: 1000
+      enable-auto-commit: true
 server:
   port: 8083
   error:
