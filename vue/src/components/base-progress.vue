@@ -69,12 +69,12 @@ export default {
 
 <style scoped>
 .base-progress {
-  margin-left: 200px;
+  margin-left: 20%;
   display: flex;
   align-items: center;
 }
 .progress-bar {
-  width: 500px;
+  width: 50%;
   height: 20px;
   border-radius: 10px;
   background-color: #ddd;

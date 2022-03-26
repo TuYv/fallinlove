@@ -93,6 +93,7 @@ export default {
       studyList: [
         { title: "/note", name: "note" },
         { title: "/", name: "finance" },
+        { title: "/mplan", name: "m-plan"},
       ],
       navList: [
         { title: "/about", name: "about" },

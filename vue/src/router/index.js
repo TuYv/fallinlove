@@ -15,6 +15,7 @@ const Demo11 = () => import('../views/Demo11.vue')
 const Login = () => import('../components/Login.vue')
 const Register = () => import('../components/Register.vue')
 const Finance = () => import('../views/Finance.vue')
+const Mplan = () => import('../views/Mplan.vue')
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,11 @@ const routes = [
         path: '/note',
         name: 'Note',
         component: Note
+      },
+      {
+        path: '/mplan',
+        name: 'Mplan',
+        component: Mplan
       },
       {
         path: '/demo2',

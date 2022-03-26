@@ -1,120 +1,58 @@
 <template>
-  <div>
-    <el-container>
-      <el-header>
-        <h1>记账 Demo</h1>
-      </el-header>
-      <div v-if="planList.length > 0">
+  <div class="home">
+    <div class="right">
+      <el-date-picker v-model="time"
+                      type="date"
+                      placeholder="选择日期"
+                      format="yyyy 年 MM 月 dd 日"
+                      value-format="yyyy-MM-dd"
+                      style="width:80%">
+      </el-date-picker>
 
-        <base-progress :count=planList[0].purposes
-                       :list=planList
-                       :showNumber=false
-                       :showName=false />
+      <el-input v-model="newTag"
+                placeholder="请输入标签"
+                @blur="changeNewTag()"
+                style="width:80%; padding-top:4%" />
 
-        <div v-for="(plan,index) in planList"
-             :key="index">
-          {{plan.nickName}} : {{plan.planName}} :: {{plan.saved}}
-        </div>
-
-        <el-input-number v-model="saveMoney"
-                         placeholder="请输入转入金额" />
-        <el-button type="primary"
-                   icon="el-icon-edit"
-                   @click="addAmount()">转入 </el-button>
+      <el-input v-model="reason"
+                placeholder="请输入备注"
+                style="width:80%; padding-top:4%" />
+      <div style="width:100%">
+        <el-input-number v-model="money"
+                         placeholder="请输入金额"
+                         style="width:80%; margin-top:4%;background: #C4C4C4;" />
       </div>
-      <!-- <el-input v-model="planName" placeholder="请输入计划名" />
-      <el-input-number v-model="purposes" placeholder="请输入目标金额" />
-      <el-button type="primary" icon="el-icon-edit" @click="insertPlan()" >新增计划 </el-button> -->
+      <el-button type="success"
+                 circle
+                 @click="income('1')"
+                 style="float: left;margin-left:25%;margin-top:8%">收</el-button>
+
+      <el-button type="danger"
+                 circle
+                 @click="income('0')"
+                 style="float: right;margin-right:25%;margin-top:8%">支</el-button>
+
+      <div style="width: 100%; height: 500px;margin:auto;padding: auto; "
+           ref="charts"></div>
+    </div>
+
+    <div class="left">
       <div v-if="monthPlanList.length > 0">
         <div v-for="(monthPlan,index) in monthPlanList"
              :key="index">
+          <el-progress :percentage=((monthPlan.usedAmount/monthPlan.planAmount)*100)
+                       :text-inside="true"
+                       :stroke-width="25"
+                       color="green"
+                       style="width:80%; margin:5%" />
           {{monthPlan.planType}} :: {{monthPlan.planAmount}} :: {{monthPlan.usedAmount}}
         </div>
       </div>
-      <el-row :gutter="20"
-              type="flex">
-        <el-col :span="4"
-                :offset="4">
-          <el-input v-model="monthPlanType"
-                    placeholder="请输入预算类型" />
-        </el-col>
-        <el-col :span="4">
-          <el-input-number v-model="monthPlanAmount"
-                           placeholder="请输入预算金额" />
-        </el-col>
-        <el-col :span="2">
-          <el-button type="primary"
-                     icon="el-icon-edit"
-                     @click="insertMonthPlan()">新增预算 </el-button>
-        </el-col>
-      </el-row>
-      <el-main>
-        <span>总金额：{{ allAmount }}</span>
-        <el-table :data="monthList"
-                  style="width: 100%">
-          <el-table-column type="expand">
-            <template slot-scope="props">
-              <div v-for="detail in props.row.monthAmountDetailList"
-                   :key="detail.id">
-                {{ detail.time }} {{ detail.reason }}
-                <template v-if="detail.amountType === '1'">收入</template>
-                <template v-else>支出</template>
-                {{ detail.amount }}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="月份"
-                           prop="time"></el-table-column>
-          <el-table-column label="收入"
-                           prop="income"></el-table-column>
-          <el-table-column label="支出"
-                           prop="spend"></el-table-column>
-        </el-table>
-        <div style="margin-top: 20px">
-          <el-radio-group v-model="tag"
-                          size="small"
-                          @change="changeTag()">
-            <el-radio-button :label="tags.tagName"
-                             v-for="tags in tagList"
-                             :key="tags.id"></el-radio-button>
-          </el-radio-group>
-        </div>
-        <el-date-picker v-model="time"
-                        type="date"
-                        placeholder="选择日期"
-                        format="yyyy 年 MM 月 dd 日"
-                        value-format="yyyy-MM-dd">
-        </el-date-picker>
-        <el-input-number v-model="money"
-                         label="请输入金额" />
-        <el-input v-model="newTag"
-                  placeholder="请输入标签"
-                  @blur="changeNewTag()" />
-        <el-input v-model="reason"
-                  placeholder="请输入备注" />
-
-        <el-select v-model="insertPlanType"
-                   placeholder="请选择">
-          <el-option v-for="item in monthPlanList"
-                     :key="item.id"
-                     :label="item.planType"
-                     :value="item.id">
-          </el-option>
-        </el-select>
-
-        <el-button type="success"
-                   round
-                   @click="income('1')">收入</el-button>
-        <el-button type="danger"
-                   round
-                   @click="income('0')">支出</el-button>
-
-        <div style="width: 500px; height: 500px"
-             ref="monthAmount"></div>
-        <div style="width: 500px; height: 500px"
-             ref="charts"></div>
-      </el-main>
-    </el-container>
+    </div>
+    <div class="root">
+      <span>{{word.hitokoto}}</span>
+      <el-divider content-position="right">{{word.from}}</el-divider>
+    </div>
   </div>
 </template>
 
@@ -144,6 +82,7 @@ export default {
       saveMoney: 0,
       insertPlanType: '',
       time: new Date(),
+      word: [],
       timer: null,
     }
   },
@@ -153,9 +92,9 @@ export default {
     this.getTagAmount()
     this.getPlan()
     this.getMonthPlan()
-    // this.timer = setInterval(() => {
-    //   this.getTheWord()
-    // }, 10000)
+    this.timer = setInterval(() => {
+      this.getTheWord()
+    }, 10000)
   },
   beforeDestroy() {
     clearInterval(this.timer)
@@ -169,9 +108,9 @@ export default {
       } else {
         // 显示
         document.title = '极简记账'
-        this.timer = setInterval(() => {
-          this.getTheWord()
-        }, 10000)
+        // this.timer = setInterval(() => {
+        //   this.getTheWord()
+        // }, 10000)
       }
     })
   },
@@ -180,18 +119,8 @@ export default {
       this.$http
         .get('https://v1.hitokoto.cn?c=d&c=h&c=i&c=k')
         .then((response) => {
+          this.word = response
           console.log(response)
-          this.$message({
-            center: true,
-            dangerouslyUseHTMLString: true,
-            message:
-              '<i>' +
-              response.hitokoto +
-              '</i><br> by                 ' +
-              response.from +
-              (response.from_who === null ? '' : '-' + response.from_who),
-            type: 'success',
-          })
         })
     },
     addAmount() {
@@ -300,19 +229,19 @@ export default {
               trigger: 'item',
             },
             legend: {
-              top: '5%',
+              bottom: '5%',
               left: 'center',
             },
             series: [
               {
                 name: '花费',
                 type: 'pie',
-                radius: ['40%', '70%'],
+                radius: ['20%', '50%'],
                 avoidLabelOverlap: false,
                 itemStyle: {
                   borderRadius: 10,
-                  borderColor: '#fff',
-                  borderWidth: 2,
+                  borderColor: 'd3cece',
+                  borderWidth: 0,
                 },
                 label: {
                   show: false,
@@ -463,43 +392,33 @@ export default {
 }
 </script>
 
-<style>
-.demo-table-expand {
-  font-size: 0;
+<style scoped>
+.home {
+  padding-left: 10%;
+  padding-right: 10%;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
 }
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
+.home .right {
+  padding-top: 4%;
+  float: left;
+  width: 40%;
+  height: 95%;
+  background: #ffffff;
 }
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
+.home .left {
+  float: left;
   width: 50%;
+  height: 95%;
+  background: #ffffff;
 }
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
+.home .root {
+  float: left;
+  position: absolute;
+  bottom: 0%;
+  width: 50%;
+  height: 5%;
+  background: #ffffff;
 }
 </style>
