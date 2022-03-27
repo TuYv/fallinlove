@@ -33,7 +33,7 @@
                  style="float: right;margin-right:25%;margin-top:8%">支</el-button>
 
       <div style="margin-top: 80px">
-        <div style="width: 100%; height: 350px;margin:auto;padding: auto; "
+        <div style="width: 100%; height: 280px;margin:auto;padding: auto; "
            ref="charts"></div>
       </div>
     </div>
@@ -237,7 +237,7 @@ export default {
               trigger: 'item',
             },
             legend: {
-              bottom: '5%',
+              top: '70%',
               left: 'center',
             },
             series: [
@@ -245,6 +245,7 @@ export default {
                 name: '花费',
                 type: 'pie',
                 radius: ['20%', '50%'],
+                center: ['50%', '35%'],
                 avoidLabelOverlap: false,
                 itemStyle: {
                   borderRadius: 10,
