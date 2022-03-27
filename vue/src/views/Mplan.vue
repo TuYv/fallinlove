@@ -40,7 +40,7 @@
       <div v-if="monthPlanList.length > 0">
         <div v-for="(monthPlan,index) in monthPlanList"
              :key="index">
-          <el-progress :percentage=((monthPlan.usedAmount/monthPlan.planAmount)*100)
+          <el-progress :percentage="parseFloat(((monthPlan.usedAmount/monthPlan.planAmount)*100).toFixed(2))"
                        :text-inside="true"
                        :stroke-width="25"
                        color="green"
