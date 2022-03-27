@@ -32,8 +32,10 @@
                  @click="income('0')"
                  style="float: right;margin-right:25%;margin-top:8%">支</el-button>
 
-      <div style="width: 100%; height: 500px;margin:auto;padding: auto; "
+      <div style="margin-top: 80px">
+        <div style="width: 100%; height: 350px;margin:auto;padding: auto; "
            ref="charts"></div>
+      </div>
     </div>
 
     <div class="left">
@@ -84,6 +86,8 @@ export default {
       time: new Date(),
       word: [],
       timer: null,
+
+      myChart: {}
     }
   },
   created() {
@@ -113,6 +117,10 @@ export default {
         // }, 10000)
       }
     })
+
+    window.onresize = () => {
+      this.myChart.resize()
+    }
   },
   methods: {
     getTheWord() {
@@ -222,9 +230,9 @@ export default {
             })
           })
           console.log('转换后', array)
-          let myChart = echarts.init(this.$refs.charts)
+          this.myChart = echarts.init(this.$refs.charts)
           // 绘制图表
-          myChart.setOption({
+          this.myChart.setOption({
             tooltip: {
               trigger: 'item',
             },
@@ -261,7 +269,7 @@ export default {
               },
             ],
           })
-          myChart.on('click', function (params) {
+          this.myChart.on('click', function (params) {
             // 控制台打印数据的名称
             console.log(params.name)
           })
