@@ -43,7 +43,7 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
     # redis
   redis:
-    host: 121.5.170.146
+    host: xx.xx.xxx.xxx
     port: 6379
     password: pass@123
     timeout: 2000 #超时连接
@@ -56,7 +56,7 @@ spring:
   datasource:
    driver-class-name: com.mysql.cj.jdbc.Driver
     #服务器
-   url: jdbc:mysql://121.5.170.146:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
+   url: jdbc:mysql://xx.xx.xxx.xxx:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
     #本地
    #url: jdbc:mysql://127.0.0.1:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
    username: root

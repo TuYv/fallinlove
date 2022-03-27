@@ -3,7 +3,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #服务器
-    #url: jdbc:mysql://47.98.142.214:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
+    #url: jdbc:mysql://xx.xx.xxx.xxx:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8
     #本地
     url: jdbc:mysql://127.0.0.1:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true
     username: root
