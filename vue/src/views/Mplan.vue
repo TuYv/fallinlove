@@ -1,6 +1,20 @@
 <template>
   <div class="home">
     <div class="right">
+      <div v-if="monthPlanList.length > 0">
+        <div v-for="(monthPlan,index) in monthPlanList"
+             :key="index">
+          <el-progress :percentage="parseFloat(((monthPlan.usedAmount/monthPlan.planAmount)*100).toFixed(2))"
+                       :text-inside="true"
+                       :stroke-width="25"
+                       color="green"
+                       style="width:80%; margin:5%" />
+          {{monthPlan.planType}} :: {{monthPlan.planAmount}} :: {{monthPlan.usedAmount}}
+        </div>
+      </div>
+
+    </div>
+    <div class="middle">
       <el-date-picker v-model="time"
                       type="date"
                       placeholder="选择日期"
@@ -32,24 +46,37 @@
                  @click="income('0')"
                  style="float: right;margin-right:25%;margin-top:8%">支</el-button>
 
-      <div style="margin-top: 80px">
-        <div style="width: 100%; height: 280px;margin:auto;padding: auto; "
-           ref="charts"></div>
-      </div>
     </div>
 
     <div class="left">
-      <div v-if="monthPlanList.length > 0">
-        <div v-for="(monthPlan,index) in monthPlanList"
-             :key="index">
-          <el-progress :percentage="parseFloat(((monthPlan.usedAmount/monthPlan.planAmount)*100).toFixed(2))"
-                       :text-inside="true"
-                       :stroke-width="25"
-                       color="green"
-                       style="width:80%; margin:5%" />
-          {{monthPlan.planType}} :: {{monthPlan.planAmount}} :: {{monthPlan.usedAmount}}
-        </div>
-      </div>
+      <el-scrollbar wrapClass="scrollbar-wrap"
+                    style="height: 100%; width: 80%;"
+                    ref="scrollbarContainer">
+        <el-timeline :reverse="true">
+          <div v-for="(month,index) in monthList"
+               :key="index">
+            <el-timeline-item :timestamp="month.time"
+                              size="large"
+                              placement="top">
+              收入：{{month.income}},支出:{{month.spend}}
+            </el-timeline-item>
+
+            <el-timeline-item v-for="(detail,x) in month.monthAmountDetailList"
+                              :key="x"
+                              :color="detail.amountType == 0 ? 'red' : 'green'"
+                              :timestamp="detail.time">
+              {{detail.tagName}} {{detail.reason}} {{ detail.amount }}
+            </el-timeline-item>
+          </div>
+        </el-timeline>
+      </el-scrollbar>
+
+      <!-- <div style="width: 400px; height: 400px"
+           ref="charts"></div> -->
+    </div>
+    <div class="center">
+      <div style="width: 100%; height: 300px"
+           ref="monthAmount"></div>
     </div>
     <div class="root">
       <span>{{word.hitokoto}}</span>
@@ -87,7 +114,7 @@ export default {
       word: [],
       timer: null,
 
-      myChart: {}
+      myChart: {},
     }
   },
   created() {
@@ -112,9 +139,9 @@ export default {
       } else {
         // 显示
         document.title = '极简记账'
-        // this.timer = setInterval(() => {
-        //   this.getTheWord()
-        // }, 10000)
+        this.timer = setInterval(() => {
+          this.getTheWord()
+        }, 10000)
       }
     })
 
@@ -403,31 +430,51 @@ export default {
 
 <style scoped>
 .home {
-  padding-left: 10%;
-  padding-right: 10%;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  width: 95%;
+  height: 90%;
   background: #ffffff;
+  border: 1px solid #ffffff;
 }
 .home .right {
-  padding-top: 4%;
+  padding-top: 2%;
   float: left;
-  width: 40%;
-  height: 95%;
+  width: 33%;
+  height: 50%;
   background: #ffffff;
+  border: 1px solid #ffffff;
+}
+.home .middle {
+  padding-top: 5%;
+  float: left;
+  width: 33%;
+  height: 50%;
+  background: #ffffff;
+  border: 1px solid #ffffff;
 }
 .home .left {
+  padding-top: 4%;
   float: left;
-  width: 50%;
-  height: 95%;
+  width: 33%;
+  height: 50%;
   background: #ffffff;
+  border: 1px solid #ffffff;
+}
+.home .center {
+  float: left;
+  position: absolute;
+  bottom: 8%;
+  width: 100%;
+  height: 42%;
+  border: 1px solid #ffffff;
 }
 .home .root {
   float: left;
   position: absolute;
   bottom: 0%;
-  width: 50%;
-  height: 5%;
+  width: 100%;
+  height: 8%;
   background: #ffffff;
+  border: 1px solid #ffffff;
 }
 </style>

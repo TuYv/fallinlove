@@ -39,7 +39,7 @@ const routes = [
         component: Note
       },
       {
-        path: '/mplan',
+        path: '/',
         name: 'Mplan',
         component: Mplan
       },
@@ -94,7 +94,7 @@ const routes = [
         component: Demo11
       },
       {
-        path: '/',
+        path: '/finance',
         name: 'Finance',
         component: Finance
       }

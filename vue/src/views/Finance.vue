@@ -169,9 +169,9 @@ export default {
       } else {
         // 显示
         document.title = '极简记账'
-        this.timer = setInterval(() => {
-          this.getTheWord()
-        }, 10000)
+        // this.timer = setInterval(() => {
+        //   this.getTheWord()
+        // }, 10000)
       }
     })
   },
