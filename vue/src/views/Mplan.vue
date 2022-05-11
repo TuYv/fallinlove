@@ -341,7 +341,19 @@ export default {
               trigger: 'axis',
             },
             legend: {
-              data: ['收入', '支出', '盈余'],
+              data: [
+                {
+                  name: '收入',
+                  lineStyle: { color: 'green' },
+                  itemStyle: { color: 'green' },
+                },
+                {
+                  name: '支出',
+                  lineStyle: { color: 'red' },
+                  itemStyle: { color: 'red' },
+                },
+                '盈余',
+              ],
             },
             grid: {
               left: '3%',
@@ -367,11 +379,15 @@ export default {
                 name: '收入',
                 type: 'line',
                 data: incomeArray,
+                lineStyle: { color: 'green' },
+                itemStyle: { color: 'green' },
               },
               {
                 name: '支出',
                 type: 'line',
                 data: outArray,
+                lineStyle: { color: 'red' },
+                itemStyle: { color: 'red' },
               },
               {
                 name: '盈余',
