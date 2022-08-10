@@ -1,5 +1,6 @@
 package com.max.fallinlove.finance.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,7 +17,14 @@ class MonthPlanServiceImplTest {
 
     @Resource MonthPlanServiceImpl monthPlanServiceImpl;
 
+    @Resource
+    //ITodoDao todoDao;
+
     @Test void queryMonthPlan() {
         System.out.println(monthPlanServiceImpl.queryMonthPlan(1));
+    }
+    @Test
+    void queryTodo() {
+        //System.out.println(JSON.toJSONString(todoDao.findById(2)));
     }
 }

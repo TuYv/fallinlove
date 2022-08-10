@@ -7,7 +7,7 @@ spring:
     #本地
     url: jdbc:mysql://127.0.0.1:3306/fallinlove?useUnicode=true&useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true
     username: root
-    password: root1234
+    password: password
 
   #mybatis-plus
   mybatis-plus:
