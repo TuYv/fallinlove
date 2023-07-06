@@ -3,6 +3,9 @@ package com.max.fallinlove.finance.controller;
 
 import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
+import com.max.fallinlove.finance.dto.AggregateBillingDTO;
+import com.max.fallinlove.finance.dto.DailyDetailDTO;
+import com.max.fallinlove.finance.dto.MonthDetailDTO;
 import com.max.fallinlove.finance.dto.MonthTagAmountDTO;
 import com.max.fallinlove.finance.req.FinanceReq;
 import com.max.fallinlove.finance.dto.FinanceDTO;
@@ -16,9 +19,11 @@ import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -95,6 +100,26 @@ public class FinanceController {
     public Result<List<MonthTagAmountDTO>> MonthTagAmount(@RequestParam("accountId") Integer accountId) {
         List<MonthTagAmountDTO> list = monthAmountDetailService.getMonthTagAmountList(accountId);
         return ResultUtils.success(list);
+    }
+
+    @RequestMapping(value = "/aggregate", method = RequestMethod.GET)
+    @Operation(summary = "账单汇总 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
+    public Result<AggregateBillingDTO> getAggregateInfo(@RequestParam("accountId") Integer accountId){
+        return ResultUtils.success(monthAmountDetailService.getAggregateInfo(accountId));
+    }
+
+    @RequestMapping(value = "/daily", method = RequestMethod.GET)
+    @Operation(summary = "日账单 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
+    public Result<DailyDetailDTO> getDailyDetail(@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd")Date date, @RequestParam("accountId") Integer accountId){
+        return ResultUtils.success(monthAmountDetailService.getDailyDetail(date, accountId));
+    }
+
+    @RequestMapping(value = "/monthDetail", method = RequestMethod.GET)
+    @Operation(summary = "月账单 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
+    public Result<MonthDetailDTO> getMonthDetail(@RequestParam("accountId") Integer accountId,
+                                                @RequestParam("month") String month,
+                                                @RequestParam("year") String year){
+        return ResultUtils.success(monthAmountService.getMonthDetail(accountId, year, month));
     }
 
 /*
