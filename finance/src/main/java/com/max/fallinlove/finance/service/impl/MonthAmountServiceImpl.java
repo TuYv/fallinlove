@@ -2,6 +2,8 @@ package com.max.fallinlove.finance.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.max.fallinlove.base.utils.DateUtil;
+import com.max.fallinlove.finance.dto.MonthDailyCountDTO;
 import com.max.fallinlove.finance.dto.MonthDetailDTO;
 import com.max.fallinlove.finance.dto.TagDetailDTO;
 import com.max.fallinlove.finance.entity.MonthAmount;
@@ -10,20 +12,16 @@ import com.max.fallinlove.finance.mapper.MonthAmountDetailMapper;
 import com.max.fallinlove.finance.mapper.MonthAmountMapper;
 import com.max.fallinlove.finance.repository.MonthAmountRepository;
 import com.max.fallinlove.finance.service.IMonthAmountService;
-
-import io.swagger.models.auth.In;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -84,6 +82,20 @@ public class MonthAmountServiceImpl extends ServiceImpl<MonthAmountMapper, Month
         monthDetailDTO.setTagDetailDTOList(tagDetailList);
 
         return monthDetailDTO;
+    }
+
+    @Override
+    public List<MonthDailyCountDTO> getMonthDailyCount(Integer accountId, String year, String month) {
+        MonthAmount monthAmount = this.getByTime(accountId, year, month);
+        List<MonthAmountDetail> detailList = monthAmountDetailService.getMonthAmountDetailList(monthAmount.getId());
+        Integer monthDay = DateUtil.getMonthDay(Integer.valueOf(monthAmount.getYear()), Integer.valueOf(monthAmount.getMonth()));
+        List<MonthDailyCountDTO> monthDailyList = MonthDailyCountDTO.buildMonthDayCount(monthDay);
+        Optional.ofNullable(detailList).orElse(new ArrayList<>()).forEach(monthAmountDetail -> {
+            int day = monthAmountDetail.getTime().getDayOfMonth();
+            monthDailyList.get(day).add();
+        });
+
+        return monthDailyList;
     }
 
     /**

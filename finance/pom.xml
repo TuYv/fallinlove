@@ -119,10 +119,10 @@
       <artifactId>commons-pool2</artifactId>
     </dependency>
     <!--kafka-->
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.kafka</groupId>-->
+<!--      <artifactId>spring-kafka</artifactId>-->
+<!--    </dependency>-->
     <!--添加热部署-->
     <dependency>
       <groupId>org.springframework.boot</groupId>

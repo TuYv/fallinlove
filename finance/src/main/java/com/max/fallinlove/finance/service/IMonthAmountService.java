@@ -1,6 +1,7 @@
 package com.max.fallinlove.finance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.max.fallinlove.finance.dto.MonthDailyCountDTO;
 import com.max.fallinlove.finance.dto.MonthDetailDTO;
 import com.max.fallinlove.finance.entity.MonthAmount;
 import java.util.List;
@@ -26,4 +27,5 @@ public interface IMonthAmountService extends IService<MonthAmount> {
     MonthAmount getByTime(Integer id, String year, String month);
 
     MonthDetailDTO getMonthDetail(Integer accountId, String year, String month);
+    List<MonthDailyCountDTO> getMonthDailyCount(Integer accountId, String year, String month);
 }

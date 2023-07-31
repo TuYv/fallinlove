@@ -5,6 +5,7 @@ import com.max.fallinlove.common.result.Result;
 import com.max.fallinlove.common.result.ResultUtils;
 import com.max.fallinlove.finance.dto.AggregateBillingDTO;
 import com.max.fallinlove.finance.dto.DailyDetailDTO;
+import com.max.fallinlove.finance.dto.MonthDailyCountDTO;
 import com.max.fallinlove.finance.dto.MonthDetailDTO;
 import com.max.fallinlove.finance.dto.MonthTagAmountDTO;
 import com.max.fallinlove.finance.req.FinanceReq;
@@ -120,6 +121,14 @@ public class FinanceController {
                                                 @RequestParam("month") String month,
                                                 @RequestParam("year") String year){
         return ResultUtils.success(monthAmountService.getMonthDetail(accountId, year, month));
+    }
+
+    @RequestMapping(value = "/monthDailyCount", method = RequestMethod.GET)
+    @Operation(summary = "月每日记账数量 - 【涂瑜】", tags = {"【账单 模块】账单相关 - 【涂瑜】", "涂瑜"})
+    public Result<List<MonthDailyCountDTO>> getMonthDailyCount(@RequestParam("accountId") Integer accountId,
+        @RequestParam("month") String month,
+        @RequestParam("year") String year) {
+        return ResultUtils.success(monthAmountService.getMonthDailyCount(accountId, year, month));
     }
 
 /*

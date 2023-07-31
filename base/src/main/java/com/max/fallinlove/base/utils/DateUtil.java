@@ -1,5 +1,7 @@
 package com.max.fallinlove.base.utils;
 
+import com.max.fallinlove.base.constants.IntegerConstants;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,5 +35,16 @@ public class DateUtil {
         calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTime();
+    }
+
+    /**
+     * 返回这个月有多少天
+     * @param year
+     * @param month
+     * @return
+     */
+    public static Integer getMonthDay(Integer year, Integer month) {
+        LocalDate date = LocalDate.of(year, month, IntegerConstants.ONE);
+        return date.getDayOfMonth();
     }
 }
