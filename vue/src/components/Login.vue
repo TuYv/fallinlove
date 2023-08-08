@@ -19,6 +19,9 @@
                   </el-form-item>
               </el-form>
             </el-row>
+          <div class="root" clearfix>
+            <a href="https://beian.miit.gov.cn/" target="_blank">皖ICP备2023011684号</a>
+          </div>
         </div>
     </div>
 </template>
