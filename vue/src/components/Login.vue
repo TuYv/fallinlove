@@ -71,9 +71,8 @@ export default {
   /* background: url("../assets/images/login_bg.jpg") no-repeat;
   background-size: cover; */
   width: 400px;
-  height: 350px;
+  min-height: 350px;
   margin: 215px auto;
-  overflow: hidden;
   padding-top: 10px;
   line-height: 40px;
 }
